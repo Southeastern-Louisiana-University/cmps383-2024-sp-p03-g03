@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Selu383-SP24-Mobile-p03-g##",
-    "slug": "Selu383-SP24-Mobile-p03-g##",
+    "name": "Selu383-SP24-Mobile-p03-g03",
+    "slug": "Selu383-SP24-Mobile-p03-g03",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,10 +22,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.selu383.sp24.p03.g##"
+      "package": "com.selu383.sp24.p03.g03"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e8f7ecbc-bdbf-433e-afd8-e2ad9b9b311f"
+      }
+    },
+    "owner": "jwilliams10"
   }
 }
