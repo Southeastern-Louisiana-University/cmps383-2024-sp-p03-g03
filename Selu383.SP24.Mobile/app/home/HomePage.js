@@ -44,10 +44,10 @@ export default function HomePage() {
           />
         </View>
         <TouchableOpacity onPress={openDrawer} style={styles.drawerButton}>
-          <Image source={require('../assets/hamburger_icon.png')} style={styles.drawerIcon} />
+          <Image source={require('../../assets/hamburger_icon.png')} style={styles.drawerIcon} />
         </TouchableOpacity>
         <View style={styles.content}>
-          <Image source={require('../assets/placeholder.jpg')} style={styles.hotelImage} />
+          <Image source={require('../../assets/placeholder.jpg')} style={styles.hotelImage} />
           <Text style={styles.welcomeText}>Welcome to Enstay!</Text>
           <Text style={styles.subtitle}>Book your stay with ease.</Text>
           <TouchableOpacity style={styles.button}>
