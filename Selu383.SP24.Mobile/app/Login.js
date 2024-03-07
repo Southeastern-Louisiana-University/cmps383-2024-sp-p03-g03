@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#d9d9d9',
   },
   input: {
     width: '80%',
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
+    backgroundColor: 'white',
   },
   button: {
     backgroundColor: '#10b981',
