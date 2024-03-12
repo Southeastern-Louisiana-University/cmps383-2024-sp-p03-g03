@@ -10,7 +10,7 @@ const HotelsComponent: React.FC = () => {
         const fetchHotels = async () => {
             try {
                 const response = await axios.get<HotelDto[]>('https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels');
-                console.log('Api Response:', response.data);
+                //console.log('Api Response:', response.data);
                 setHotels(response.data);
             } catch (error) {
                 console.error('Error fetching hotels:', error);

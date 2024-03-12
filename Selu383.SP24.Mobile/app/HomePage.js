@@ -7,9 +7,6 @@ export default function HomePage({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="dark-content"/>
-     {/* <View style={styles.header}>
-        <Text style={styles.headerText}>Enstay Hotel</Text>
-      </View> */}
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -17,9 +14,6 @@ export default function HomePage({ navigation }) {
           placeholderTextColor="#000"
         />
       </View>
-     {/* <TouchableOpacity onPress={() => navigation.openDrawer()} style={styles.drawerButton}>
-        <Image source={require('../assets/hamburger_icon.png')} style={styles.drawerIcon} />
-  </TouchableOpacity> */}
       <View style={styles.content}>
         <Image source={require('../assets/placeholder2.jpg')} style={styles.hotelImage} />
         <Text style={styles.welcomeText}>Welcome to Enstay!</Text>
