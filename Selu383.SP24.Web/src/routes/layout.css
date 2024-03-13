@@ -23,7 +23,7 @@ body {
 }
 
 .logo {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: bold;
   color: #10b981;
   padding-left: 20px;
@@ -51,17 +51,17 @@ body {
 
 .sidebar {
   position: fixed;
-  top: 100px; /* Adjust this value to set the distance from the top */
-  right: -100%; /* Initially off the screen */
+  top: 100px;
+  right: -100%;
   width: 150px;
-  height: calc(100vh - 120px); /* Adjust the height as needed */
+  height: calc(40vh - 120px);
   background-color: #ffffff;
-  padding: 20px;
+  padding: 15px;
   transition: right 0.3s ease;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  border-bottom-left-radius: 30px; /* Round the bottom left corner */
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Add shadow on the left side */
+  border-bottom-left-radius: 30px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar ul {
@@ -78,7 +78,7 @@ body {
 }
 
 .sidebar-open {
-  right: 0; /* Slide in from right when menu is open */
+  right: 0;
 }
 
 .close-btn {
@@ -93,7 +93,65 @@ body {
 }
 
 .close-btn:hover {
-  color: #ff0000; /* Change color on hover if desired */
+  color: #ff0000;
+}
+
+.body-content {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column; /* Align items in a column */
+  margin-top: 100px;
+}
+
+.hotel-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* Center horizontally */
+}
+
+.card {
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card h3 {
+  color: #10b981;
+}
+
+.card p {
+  color: #10b981;
+}
+
+.card ul {
+  margin-top: 5px;
+  padding-left: 20px;
+}
+
+.card ul li {
+  color: #10b981;
+}
+
+.book-now-btn {
+  background-color: #10b986;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.book-now-btn:hover {
+  background-color: #0e8b71;
 }
 
 .footer {
