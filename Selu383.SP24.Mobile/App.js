@@ -1,9 +1,9 @@
-// index.js
+// App.js
 import React from 'react';
 import { View } from 'react-native';
-import HomePage from './HomePage'; 
-import LoginScreen from './Login';
-import HotelsScreen from './Hotel';
+import HomePage from './app/HomePage'; 
+import LoginScreen from './app/Login';
+import HotelsScreen from './app/Hotel';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
