@@ -32,6 +32,10 @@
         "projectId": "e8f7ecbc-bdbf-433e-afd8-e2ad9b9b311f"
       }
     },
-    "owner": "jwilliams10"
+    "owner": "jwilliams10",
+    "plugins": [
+      "expo-router"
+    ],
+    "scheme": "your-app-scheme"
   }
 }
