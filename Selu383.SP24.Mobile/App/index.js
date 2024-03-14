@@ -18,7 +18,7 @@ export default function App() {
         component={HomePage} 
         options={{
           drawerLabel: 'Home',
-          title: 'Enstay Hotels',
+          title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
           },
@@ -34,7 +34,7 @@ export default function App() {
         component={LoginScreen}
         options={{
           drawerLabel: 'Login',
-          title: 'Enstay Hotels',
+          title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
           },
@@ -50,7 +50,7 @@ export default function App() {
         component={HotelsScreen}
         options={{
           drawerLabel: 'Hotels',
-          title: 'Enstay Hotels',
+          title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
           },
