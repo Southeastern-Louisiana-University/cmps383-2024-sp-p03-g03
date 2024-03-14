@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Data;
 using Selu383.SP24.Api.Extensions;
 using Selu383.SP24.Api.Features.Authorization;
+using Selu383.SP24.Api.Features.Cities;
 using Selu383.SP24.Api.Features.Hotels;
 
 namespace Selu383.SP24.Api.Controllers;
@@ -148,12 +149,14 @@ public class HotelsController : ControllerBase
     private static IQueryable<HotelDto> GetHotelDtos(IQueryable<Hotel> hotels)
     {
         return hotels
+            .Include(h => h.City)
             .Select(x => new HotelDto
             {
                 Id = x.Id,
                 Name = x.Name,
                 Address = x.Address,
-                ManagerId = x.ManagerId
+                ManagerId = x.ManagerId,
+                City = x.City != null ? new CityDto { Id = x.CityId, Name = x.City.Name } : null
             });
     }
 }

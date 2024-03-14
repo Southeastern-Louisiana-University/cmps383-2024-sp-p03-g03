@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Features.Authorization;
+using Selu383.SP24.Api.Features.Cities;
 using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Data;
 
@@ -16,7 +18,10 @@ public static class SeedHelper
         await AddRoles(serviceProvider);
         await AddUsers(serviceProvider);
 
+        await AddCities(dataContext);
         await AddHotels(dataContext);
+        await AddRoomTypes(dataContext);
+        await AddRooms(dataContext);
     }
 
     private static async Task AddUsers(IServiceProvider serviceProvider)
@@ -77,17 +82,90 @@ public static class SeedHelper
         {
             return;
         }
-
+        var cities = await dataContext.Set<City>().ToListAsync();
         for (int i = 0; i < 4; i++)
         {
+            var randomCity = cities[new Random().Next(cities.Count)];
             dataContext.Set<Hotel>()
                 .Add(new Hotel
                 {
                     Name = "Hammond " + i,
-                    Address = "1234 Place st"
+                    Address = "1234 Place st",
+                    CityId = randomCity.Id
                 });
         }
 
+        await dataContext.SaveChangesAsync();
+    }
+
+    private static async Task AddCities(DataContext dataContext) 
+    {
+        var cities = dataContext.Set<City>();
+
+        if (await cities.AnyAsync())
+        {
+            return;
+        }
+
+        for (int i = 0; i < 3; i++) 
+        {
+            dataContext.Set<City>()
+                .Add(new City 
+            { 
+                Name = "City " + i
+            });
+        }
+
+        await dataContext.SaveChangesAsync();
+    }
+
+    private static async Task AddRoomTypes(DataContext dataContext) 
+    {
+        var roomTypes = dataContext.Set<RoomType>();
+
+        if (await roomTypes.AnyAsync()) 
+        {
+            return;
+        }
+
+        var predefinedRooms = new List<RoomType> 
+        {
+            new RoomType { Name = "Twin Bed", NumberOfBeds = 2},
+            new RoomType { Name = "Queen Bed", NumberOfBeds = 2},
+            new RoomType { Name = "King Bed", NumberOfBeds = 1}
+        };
+
+        await roomTypes.AddRangeAsync(predefinedRooms);
+        await dataContext.SaveChangesAsync();
+    }
+
+    private static async Task AddRooms(DataContext dataContext) 
+    {
+        var rooms = dataContext.Set<Room>();
+        var hotels = dataContext.Set<Hotel>();
+        var roomTypes = await dataContext.Set<RoomType>().ToListAsync();
+
+        if (await rooms.AnyAsync()) 
+        {
+            return;
+        }
+
+        foreach (var roomType in roomTypes)
+        {
+            foreach (var hotel in hotels)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    dataContext.Set<Room>().Add(new Room
+                    {
+                        Beds = roomType.Name,
+                        IsAvailable = true,
+                        RoomType = roomType,
+                        HotelId = hotel.Id
+                    });
+                }
+            }
+        }
         await dataContext.SaveChangesAsync();
     }
 }
