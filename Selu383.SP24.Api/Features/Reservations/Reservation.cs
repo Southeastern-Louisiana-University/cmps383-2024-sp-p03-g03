@@ -10,10 +10,10 @@ namespace Selu383.SP24.Api.Features.Reservations
         public int Id { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
-
         public int ReservationNumber { get; set; }
+        public int RoomId { get; set; }
         public Room? Room { get; set; }
-
-        public City? City => Room?.Hotel?.City;
+        public string HotelName { get; set; }
+        //public virtual ICollection<Hotel>? Hotels { get; set; }
     }
 }

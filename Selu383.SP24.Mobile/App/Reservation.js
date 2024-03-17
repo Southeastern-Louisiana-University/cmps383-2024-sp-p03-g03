@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar, TextInput } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export default function HomePage({ navigation }) {
+export default function ReservationPage({ navigation }) {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
+  const [city, setCity] = useState('');
+  const [hotel, setHotel] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDateType, setSelectedDateType] = useState('');
 
@@ -29,38 +29,51 @@ export default function HomePage({ navigation }) {
   };
 
   return (
-    /*<View style={styles.container}>
+    <View style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="dark-content"/>
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchText}>Where?</Text>
-      </View>
-      <View style={styles.dateContainer}>
-        <TouchableOpacity onPress={() => showDatePicker('checkIn')}>
-          <Image source={require('../assets/calendar_icon.png')} style={styles.calendarIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => showDatePicker('checkOut')}>
-          <Image source={require('../assets/calendar_icon.png')} style={styles.calendarIcon} />
-        </TouchableOpacity>
-      </View>
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      /> */
       <View style={styles.content}>
         <Image source={require('../assets/placeholder2.jpg')} style={styles.hotelImage} />
         <Text style={styles.welcomeText}>Welcome to Enstay!</Text>
         <Text style={styles.subtitle}>Book your stay with ease.</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reservation')}>
-          <Text style={styles.buttonText}>Book Now</Text>
+        <TouchableOpacity style={styles.dateContainer} onPress={() => showDatePicker('checkIn')}>
+          <TextInput
+            style={styles.input}
+            placeholder="Check-in Date"
+            value={checkInDate}
+            editable={false}
+          />
         </TouchableOpacity>
-        <Text style={styles.subtitle}>Need to check in?</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.buttonText}>Check In</Text>
+        <TouchableOpacity style={styles.dateContainer} onPress={() => showDatePicker('checkOut')}>
+          <TextInput
+            style={styles.input}
+            placeholder="Check-out Date"
+            value={checkOutDate}
+            editable={false}
+          />
+        </TouchableOpacity>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="City"
+          value={city}
+          onChangeText={setCity}
+        />
+        <TextInput
+          style={[styles.input, styles.hotelInput]}
+          placeholder="Hotel"
+          value={hotel}
+          onChangeText={setHotel}
+        />
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Confirmation')}>
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
-    //</View>
+    </View>
   );
 } 
 
@@ -68,32 +81,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#d9d9d9',
-  },
-  searchContainer: {
-    backgroundColor: '#fff',
-    paddingVertical: 10,
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  searchText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    paddingHorizontal: 20,
-  },
-  calendarIcon: {
-    width: 30,
-    height: 30,
+    padding: 20,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
   },
   hotelImage: {
     width: '80%',
@@ -109,6 +104,19 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     marginBottom: 20,
+  },
+  dateContainer: {
+    marginBottom: 15,
+  },
+  input: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    width: '100%',
+  },
+  hotelInput: {
+    marginTop: 10, // Add margin top to create space between city and hotel inputs
   },
   button: {
     backgroundColor: '#10b981',

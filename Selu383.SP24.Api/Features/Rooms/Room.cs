@@ -1,4 +1,5 @@
 ﻿using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Reservations;
 
 namespace Selu383.SP24.Api.Features.Rooms
 {
@@ -13,5 +14,7 @@ namespace Selu383.SP24.Api.Features.Rooms
         public virtual Hotel Hotel { get; set; }
 
         public virtual RoomType RoomType { get; set; }
+
+        public virtual ICollection<Reservation>? Reservations { get; set; }
     }
 }

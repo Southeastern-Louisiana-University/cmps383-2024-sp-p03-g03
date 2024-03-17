@@ -156,7 +156,7 @@ public class HotelsController : ControllerBase
                 Name = x.Name,
                 Address = x.Address,
                 ManagerId = x.ManagerId,
-                City = x.City != null ? new CityDto { Id = x.CityId, Name = x.City.Name } : null
+                CityName = x.City != null ? x.City.Name : null
             });
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Selu383.SP24.Api.Features.Cities;
+using System.Runtime.CompilerServices;
 
 namespace Selu383.SP24.Api.Features.Hotels;
 
@@ -12,6 +13,6 @@ public class HotelDto
 
     public int? ManagerId { get; set; }
 
-    public CityDto City { get; set; }
+    public string? CityName { get; set; }
 
 }

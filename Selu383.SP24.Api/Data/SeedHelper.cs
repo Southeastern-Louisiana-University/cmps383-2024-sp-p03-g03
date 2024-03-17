@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Cities;
 using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Reservations;
 using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Data;
@@ -22,6 +23,7 @@ public static class SeedHelper
         await AddHotels(dataContext);
         await AddRoomTypes(dataContext);
         await AddRooms(dataContext);
+        await AddReservations(dataContext);
     }
 
     private static async Task AddUsers(IServiceProvider serviceProvider)
@@ -168,4 +170,39 @@ public static class SeedHelper
         }
         await dataContext.SaveChangesAsync();
     }
+    private static async Task AddReservations(DataContext dataContext)
+    {
+        var reservations = dataContext.Set<Reservation>();
+
+        if (await reservations.AnyAsync())
+        {
+            return;
+        }
+
+        var random = new Random();
+        var rooms = await dataContext.Set<Room>()
+            .Include(r => r.Hotel)
+            .ToListAsync();
+
+        for (int i = 0; i < 3; i++)
+        {
+            var room = rooms[random.Next(rooms.Count)];
+            var checkIn = DateTime.Today.AddDays(random.Next(1, 10));
+            var checkOut = checkIn.AddDays(random.Next(1, 10));
+
+            var reservation = new Reservation
+            {
+                CheckIn = checkIn,
+                CheckOut = checkOut,
+                ReservationNumber = random.Next(1000, 9999),
+                Room = room, 
+                RoomId = room.Id, 
+                HotelName = room.Hotel?.Name 
+            };
+
+            reservations.Add(reservation);
+        }
+        await dataContext.SaveChangesAsync();
+    }
+
 }
