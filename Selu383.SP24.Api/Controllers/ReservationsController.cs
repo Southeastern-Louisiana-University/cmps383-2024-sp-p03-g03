@@ -65,6 +65,29 @@ namespace Selu383.SP24.Api.Controllers
             return Ok(reservationDto);
         }
 
+        [HttpGet("user/{userId}")]
+        public IActionResult GetReservationsByUserId(int userId)
+        {
+            var userReservations = reservations.Where(x => x.UserId == userId).ToList();
+            if (userReservations.Count == 0)
+            {
+                return NotFound("No reservations found for the user.");
+            }
+
+            var reservationDtos = userReservations.Select(x => new ReservationDto
+            {
+                Id = x.Id,
+                CheckIn = x.CheckIn,
+                CheckOut = x.CheckOut,
+                ReservationNumber = x.ReservationNumber,
+                RoomId = x.RoomId,
+                HotelName = x.HotelName,
+                UserId = x.UserId,
+            });
+
+            return Ok(reservationDtos);
+        }
+
         [HttpPost]
 
         public ActionResult<ReservationDto> CreateReservation(ReservationDto dto)
