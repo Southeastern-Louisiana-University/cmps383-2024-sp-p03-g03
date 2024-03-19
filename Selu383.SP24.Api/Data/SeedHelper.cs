@@ -13,6 +13,7 @@ public static class SeedHelper
     public static async Task MigrateAndSeed(IServiceProvider serviceProvider)
     {
         var dataContext = serviceProvider.GetRequiredService<DataContext>();
+        var userManager = serviceProvider.GetRequiredService <UserManager<User>>();
 
         await dataContext.Database.MigrateAsync();
 
@@ -23,7 +24,7 @@ public static class SeedHelper
         await AddHotels(dataContext);
         await AddRoomTypes(dataContext);
         await AddRooms(dataContext);
-        await AddReservations(dataContext);
+        await AddReservations(dataContext, userManager);
     }
 
     private static async Task AddUsers(IServiceProvider serviceProvider)
@@ -56,6 +57,13 @@ public static class SeedHelper
         };
         await userManager.CreateAsync(sue, defaultPassword);
         await userManager.AddToRoleAsync(sue, RoleNames.User);
+
+       /* var test = new User 
+        {
+            UserName = "test"
+        };
+        await userManager.CreateAsync(test, "test");
+        await userManager.AddToRoleAsync(test, RoleNames.User); */
     }
 
     private static async Task AddRoles(IServiceProvider serviceProvider)
@@ -170,7 +178,7 @@ public static class SeedHelper
         }
         await dataContext.SaveChangesAsync();
     }
-    private static async Task AddReservations(DataContext dataContext)
+    private static async Task AddReservations(DataContext dataContext, UserManager<User> userManager)
     {
         var reservations = dataContext.Set<Reservation>();
 
@@ -183,6 +191,8 @@ public static class SeedHelper
         var rooms = await dataContext.Set<Room>()
             .Include(r => r.Hotel)
             .ToListAsync();
+
+        var testUser = await userManager.FindByNameAsync("sue");
 
         for (int i = 0; i < 3; i++)
         {
@@ -197,7 +207,8 @@ public static class SeedHelper
                 ReservationNumber = random.Next(1000, 9999),
                 Room = room, 
                 RoomId = room.Id, 
-                HotelName = room.Hotel?.Name 
+                HotelName = room.Hotel?.Name,
+                UserId = testUser.Id
             };
 
             reservations.Add(reservation);

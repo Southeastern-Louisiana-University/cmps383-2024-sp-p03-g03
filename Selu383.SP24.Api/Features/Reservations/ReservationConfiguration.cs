@@ -14,6 +14,13 @@ namespace Selu383.SP24.Api.Features.Reservations
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder
+                .HasOne(x => x.User)
+                .WithMany(r => r.Reservations)
+                .HasForeignKey(x => x.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
             /* builder
                 .HasOne(r => r.City)
                 .WithMany(c => c.Reservations)

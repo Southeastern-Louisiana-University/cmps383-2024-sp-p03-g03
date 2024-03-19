@@ -42,6 +42,29 @@ namespace Selu383.SP24.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("reservation/{reservationNumber}")]
+        public ActionResult<ReservationDto> GetReservationByReservationNumber(int reservationNumber)
+        {
+            var reservation = reservations.FirstOrDefault(x => x.ReservationNumber == reservationNumber);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            var reservationDto = new ReservationDto
+            {
+                Id = reservation.Id,
+                CheckIn = reservation.CheckIn,
+                CheckOut = reservation.CheckOut,
+                ReservationNumber = reservation.ReservationNumber,
+                RoomId = reservation.RoomId,
+                HotelName = reservation.HotelName,
+                UserId = reservation.UserId
+            };
+
+            return Ok(reservationDto);
+        }
+
         [HttpPost]
 
         public ActionResult<ReservationDto> CreateReservation(ReservationDto dto)
@@ -57,7 +80,8 @@ namespace Selu383.SP24.Api.Controllers
                 CheckOut = dto.CheckOut,
                 ReservationNumber = dto.ReservationNumber,
                 HotelName = dto.HotelName,
-                RoomId = dto.RoomId
+                RoomId = dto.RoomId,
+                UserId = dto.UserId
             };
             reservations.Add(reservation);
 
@@ -120,7 +144,8 @@ namespace Selu383.SP24.Api.Controllers
                     CheckOut = x.CheckOut,
                     ReservationNumber = x.ReservationNumber,
                     RoomId = x.RoomId,
-                    HotelName = x.HotelName,          
+                    HotelName = x.HotelName,
+                    UserId = x.UserId,
                 });
         }
     }
