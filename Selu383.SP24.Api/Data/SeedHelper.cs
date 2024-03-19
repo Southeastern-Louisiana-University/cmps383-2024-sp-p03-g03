@@ -187,33 +187,32 @@ public static class SeedHelper
             return;
         }
 
-        var random = new Random();
         var rooms = await dataContext.Set<Room>()
             .Include(r => r.Hotel)
             .ToListAsync();
 
         var testUser = await userManager.FindByNameAsync("sue");
 
-        for (int i = 0; i < 3; i++)
+        var room = rooms.FirstOrDefault();
+
+        if (room != null)
         {
-            var room = rooms[random.Next(rooms.Count)];
-            var checkIn = DateTime.Today.AddDays(random.Next(1, 10));
-            var checkOut = checkIn.AddDays(random.Next(1, 10));
+            var checkIn = DateTime.Today.AddDays(1);
+            var checkOut = checkIn.AddDays(10);
 
             var reservation = new Reservation
             {
                 CheckIn = checkIn,
                 CheckOut = checkOut,
-                ReservationNumber = random.Next(1000, 9999),
-                Room = room, 
-                RoomId = room.Id, 
+                ReservationNumber = 1234,
+                Room = room,
+                RoomId = room.Id,
                 HotelName = room.Hotel?.Name,
                 UserId = testUser.Id
             };
 
             reservations.Add(reservation);
+            await dataContext.SaveChangesAsync();
         }
-        await dataContext.SaveChangesAsync();
     }
-
 }
