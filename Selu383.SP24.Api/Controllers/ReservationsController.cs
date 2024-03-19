@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Selu383.SP24.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/reservations")]
     [ApiController]
     public class ReservationsController : ControllerBase
     {
@@ -89,7 +89,6 @@ namespace Selu383.SP24.Api.Controllers
         }
 
         [HttpPost]
-
         public ActionResult<ReservationDto> CreateReservation(ReservationDto dto)
         {
             if (IsInvalid(dto))
