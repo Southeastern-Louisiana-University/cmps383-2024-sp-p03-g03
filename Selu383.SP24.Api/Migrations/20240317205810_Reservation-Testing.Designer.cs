@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Selu383.SP24.Api.Data;
 
@@ -11,9 +12,11 @@ using Selu383.SP24.Api.Data;
 namespace Selu383.SP24.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240317205810_Reservation-Testing")]
+    partial class ReservationTesting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,11 +265,16 @@ namespace Selu383.SP24.Api.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<int?>("ReservationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
                     b.HasIndex("ManagerId");
+
+                    b.HasIndex("ReservationId");
 
                     b.ToTable("Hotel");
                 });
@@ -285,11 +293,8 @@ namespace Selu383.SP24.Api.Migrations
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HotelId")
+                    b.Property<int>("HotelId")
                         .HasColumnType("int");
-
-                    b.Property<string>("HotelName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ReservationNumber")
                         .HasColumnType("int");
@@ -297,16 +302,11 @@ namespace Selu383.SP24.Api.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
 
                     b.HasIndex("RoomId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Reservation");
                 });
@@ -429,6 +429,10 @@ namespace Selu383.SP24.Api.Migrations
                         .WithMany("Hotels")
                         .HasForeignKey("ManagerId");
 
+                    b.HasOne("Selu383.SP24.Api.Features.Reservations.Reservation", null)
+                        .WithMany("Hotels")
+                        .HasForeignKey("ReservationId");
+
                     b.Navigation("City");
 
                     b.Navigation("Manager");
@@ -436,9 +440,11 @@ namespace Selu383.SP24.Api.Migrations
 
             modelBuilder.Entity("Selu383.SP24.Api.Features.Reservations.Reservation", b =>
                 {
-                    b.HasOne("Selu383.SP24.Api.Features.Hotels.Hotel", null)
+                    b.HasOne("Selu383.SP24.Api.Features.Hotels.Hotel", "Hotel")
                         .WithMany("Reservations")
-                        .HasForeignKey("HotelId");
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Selu383.SP24.Api.Features.Rooms.Room", "Room")
                         .WithMany("Reservations")
@@ -446,15 +452,9 @@ namespace Selu383.SP24.Api.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Selu383.SP24.Api.Features.Authorization.User", "User")
-                        .WithMany("Reservations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.Navigation("Hotel");
 
                     b.Navigation("Room");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Selu383.SP24.Api.Features.Rooms.Room", b =>
@@ -483,8 +483,6 @@ namespace Selu383.SP24.Api.Migrations
                 {
                     b.Navigation("Hotels");
 
-                    b.Navigation("Reservations");
-
                     b.Navigation("Roles");
                 });
 
@@ -498,6 +496,11 @@ namespace Selu383.SP24.Api.Migrations
                     b.Navigation("Reservations");
 
                     b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("Selu383.SP24.Api.Features.Reservations.Reservation", b =>
+                {
+                    b.Navigation("Hotels");
                 });
 
             modelBuilder.Entity("Selu383.SP24.Api.Features.Rooms.Room", b =>
