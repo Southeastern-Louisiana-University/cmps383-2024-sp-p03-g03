@@ -27,6 +27,7 @@ const HotelsComponent: React.FC = () => {
                 <View key={index} style={styles.hotelContainer}>
                     <Text style={styles.hotelName}>{hotel.name}</Text>
                     <Text style={styles.hotelAddress}>{hotel.address}</Text>
+                    <Text style={styles.hotelAddress}>{hotel.cityName}</Text>
                 </View>
             ))}
         </View>
