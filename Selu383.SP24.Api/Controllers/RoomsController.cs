@@ -38,6 +38,18 @@ namespace Selu383.SP24.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("byhotel/{hotelId}")]
+        public ActionResult<IQueryable<RoomDto>> GetRoomsByHotel(int hotelId)
+        {
+            var hotelRooms = rooms.Where(x => x.HotelId == hotelId);
+            if (!hotelRooms.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(GetRoomDtos(hotelRooms));
+        }
+
         private IQueryable<RoomDto> GetRoomDtos(IQueryable<Room> rooms)
         {
             return rooms
@@ -46,7 +58,9 @@ namespace Selu383.SP24.Api.Controllers
                     Id = x.Id,
                     Beds = x.Beds,
                     IsAvailable = x.IsAvailable,
-                    HotelId = x.HotelId
+                    HotelId = x.HotelId,
+                    HotelName = x.Hotel.Name,
+                    
                 });
         }
     }
