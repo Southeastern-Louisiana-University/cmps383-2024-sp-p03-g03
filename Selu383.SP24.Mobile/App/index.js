@@ -5,10 +5,10 @@ import HomePage from './HomePage';
 import LoginScreen from './Login';
 import HotelsScreen from './Hotel';
 import ListRes from './listRes';
+import Room from './Room';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Reservation from './Reservation';
-
 
 const Drawer = createDrawerNavigator();
 
@@ -84,6 +84,22 @@ export default function App() {
         component={ListRes}
         options={{
           drawerLabel: 'List Reservations',
+          title: 'EnStay Hotels',
+          headerStyle: {
+            backgroundColor: '#10b981',
+          },
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+          },
+        }}
+        />
+        <Drawer.Screen name="List Rooms"
+        component={Room}
+        options={{
+          drawerLabel: 'List Rooms',
           title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
