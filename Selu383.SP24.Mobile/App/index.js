@@ -9,6 +9,7 @@ import Room from './Room';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Reservation from './Reservation';
+import RoomListScreen from './RoomListScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -112,6 +113,23 @@ export default function App() {
           },
         }}
         />
+        <Drawer.Screen
+  name="RoomList"
+  component={RoomListScreen}
+  options={{
+    drawerLabel: 'Room List',
+    title: 'Room List',
+    headerStyle: {
+      backgroundColor: '#10b981',
+    },
+    headerTintColor: 'white',
+    headerTitleAlign: 'center',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+  }}
+/>
 
       </Drawer.Navigator>
     </NavigationContainer>

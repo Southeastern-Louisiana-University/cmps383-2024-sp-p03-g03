@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import HotelDto from '../features/hotels/HotelDto';
 import { useNavigation } from '@react-navigation/native';
+import RoomListComponent from "./RoomListComponent";
 
 const HotelsComponent: React.FC = () => {
     const [hotels, setHotels] = useState<HotelDto[]>([]);
-    const navigation = useNavigation(); // Initialize navigation
+    const navigation = useNavigation<any>(); // Initialize navigation
 
     useEffect(() => {
         const fetchHotels = async () => {
@@ -22,8 +23,10 @@ const HotelsComponent: React.FC = () => {
     }, []);
 
     const handleHotelPress = (hotelId: number) => {
+        navigation.navigate('RoomList', { hotelId });
     };
 
+    
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Hotels</Text>
