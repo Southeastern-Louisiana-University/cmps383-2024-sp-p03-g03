@@ -9,11 +9,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    children: [
-      { path: "/login", element: <Login /> },
-      // More Routes Here
-    ],
+    children: [],
   },
+  { path: "/login", element: <Login /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
