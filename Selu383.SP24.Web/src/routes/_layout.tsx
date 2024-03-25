@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./layout.css";
-import AuthContext from "../features/authentication/AuthContext";
 import UserDto from "../features/authentication/UserDto";
 import { useFetch } from "use-http";
-import { useNavigate } from "react-router-dom";
+import AuthContext from "../features/authentication/AuthContext";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
@@ -23,7 +23,6 @@ export default function MainLayout() {
     },
     []
   );
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -42,43 +41,43 @@ export default function MainLayout() {
 
   return (
     <>
-      <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
+      <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}>
+        <div className={`body ${isMenuOpen ? "menu-open" : ""}`}>
+          <div className="container">
+            <header className="header">
+              <div className="logo">EnStay</div>
+              <button className="burger-menu" onClick={toggleMenu}>
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+              </button>
+            </header>
+          </div>
 
-      <div className={`body ${isMenuOpen ? "menu-open" : ""}`}>
-        <div className="container">
-          <header className="header">
-            <div className="logo">EnStay</div>
-            <button className="burger-menu" onClick={toggleMenu}>
-              <div className="line"></div>
-              <div className="line"></div>
-              <div className="line"></div>
+          <div className={`sidebar ${isMenuOpen ? "sidebar-open" : ""}`}>
+            <button className="close-btn" onClick={closeSidebar}>
+              X
             </button>
-          </header>
-        </div>
-
-        <div className={`sidebar ${isMenuOpen ? "sidebar-open" : ""}`}>
-          <button className="close-btn" onClick={closeSidebar}>
-            X
-          </button>
-          <ul>
-            <Button onClick={() => navigate("./login")}>Login</Button>
-            <button>Sign Up</button>
-          </ul>
-        </div>
-
-        <div className="body-content">
-          <div className="address-bar">
-            <input type="text" placeholder="Enter your address" />
+            <ul>
+              <Button onClick={() => navigate("/login")}>Login</Button>
+              <button>Sign Up</button>
+            </ul>
           </div>
-          <button className="book-now-btn">Book Now</button>
-        </div>
 
-        <footer className="footer">
-          <div className="footer-content">
-            <p>&copy; 2024 EnStay. All Rights Reserved.</p>
+          <div className="body-content">
+            <div className="address-bar">
+              <input type="text" placeholder="Enter your address" />
+            </div>
+            <button className="book-now-btn">Book Now</button>
           </div>
-        </footer>
-      </div>
+
+          <footer className="footer">
+            <div className="footer-content">
+              <p>&copy; 2024 EnStay. All Rights Reserved.</p>
+            </div>
+          </footer>
+        </div>
+      </AuthContext.Provider>
     </>
   );
 }
