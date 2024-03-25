@@ -1,7 +1,7 @@
 export interface UserDto {
-  Id: number;
-  UserName: string;
-  Password: string;
+  id: number;
+  userName: string;
+  password: string;
 }
 
 export default UserDto;
