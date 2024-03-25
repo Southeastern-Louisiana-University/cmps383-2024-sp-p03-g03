@@ -49,8 +49,8 @@ export default function HomePage({ navigation }) {
         onCancel={hideDatePicker}
       /> */
       <View style={styles.content}>
-        <Image source={require('../assets/placeholder2.jpg')} style={styles.hotelImage} />
-        <Text style={styles.welcomeText}>Welcome to Enstay!</Text>
+        <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
+        <Text style={styles.welcomeText}>Welcome to EnStay!</Text>
         <Text style={styles.subtitle}>Book your stay with ease.</Text>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reservation')}>
           <Text style={styles.buttonText}>Book Now</Text>
@@ -67,7 +67,7 @@ export default function HomePage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#d9d9d9',
+    backgroundColor: '#fff',
   },
   searchContainer: {
     backgroundColor: '#fff',

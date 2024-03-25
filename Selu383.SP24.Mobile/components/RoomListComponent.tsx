@@ -11,8 +11,10 @@ interface RoomListProps {
 
 const RoomListComponent: React.FC<RoomListProps> = ({ hotelId }) => {
     const [rooms, setRooms] = useState<RoomDto[]>([]);
+    console.log('Hotel ID:', hotelId);
 
     useEffect(() => {
+        //console.log('Hotel ID:', hotelId);
         const fetchRooms = async () => {
             try {
                 const response = await axios.get<RoomDto[]>(`https://selu383-sp24-p03-g03.azurewebsites.net/api/rooms/byhotel/${hotelId}`);

@@ -12,10 +12,10 @@ const RoomsComponent: React.FC = () => {
             try {
                 const response = await axios.get<RoomDto[]>('https://selu383-sp24-p03-g03.azurewebsites.net/api/rooms');
                 setRooms(response.data);
-                setLoading(false); // Set loading to false when data is fetched
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching rooms:', error);
-                setLoading(false); // Set loading to false even if there's an error
+                setLoading(false);
             }
         };
 
@@ -25,8 +25,8 @@ const RoomsComponent: React.FC = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Rooms</Text>
-            {loading ? ( // Render loading indicator if loading is true
-                <ActivityIndicator size="large" color="#0000ff" />
+            {loading ? (
+                <ActivityIndicator size="large" color="#10b981" />
             ) : (
                 <ScrollView style={styles.scrollView}>
                     {rooms.map((room, index) => (

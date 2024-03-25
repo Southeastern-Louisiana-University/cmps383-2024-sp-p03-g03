@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import HotelDto from '../features/hotels/HotelDto';
 import { useNavigation } from '@react-navigation/native';
-import RoomListComponent from "./RoomListComponent";
 
 const HotelsComponent: React.FC = () => {
     const [hotels, setHotels] = useState<HotelDto[]>([]);
-    const navigation = useNavigation<any>(); // Initialize navigation
+    const [loading, setLoading] = useState(true);
+    const navigation = useNavigation<any>();
 
     useEffect(() => {
         const fetchHotels = async () => {
             try {
                 const response = await axios.get<HotelDto[]>('https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels');
                 setHotels(response.data);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching hotels:', error);
+                setLoading(false);
             }
         };
 
@@ -23,46 +25,79 @@ const HotelsComponent: React.FC = () => {
     }, []);
 
     const handleHotelPress = (hotelId: number) => {
+        console.log('Hotel ID:', hotelId);
         navigation.navigate('RoomList', { hotelId });
     };
 
-    
+    if (loading) {
+        return (
+            <View style={[styles.container, styles.loadingContainer]}>
+                <ActivityIndicator size="large" color="#10b981" />
+            </View>
+        );
+    }
+
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text style={styles.heading}>Hotels</Text>
             {hotels.map((hotel, index) => (
                 <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id)}>
                     <View style={styles.hotelContainer}>
+                        <Image
+                            style={styles.hotelImage}
+                            source={require('../assets/placeholder1.jpg')}
+                        />
                         <Text style={styles.hotelName}>{hotel.name}</Text>
                         <Text style={styles.hotelAddress}>{hotel.address}</Text>
                         <Text style={styles.hotelAddress}>{hotel.cityName}</Text>
                     </View>
                 </TouchableOpacity>
             ))}
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
         backgroundColor: '#fff',
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     heading: {
-        fontSize: 24,
+        fontSize: 32,
         fontWeight: 'bold',
         marginBottom: 10,
+        textAlign: 'center',
     },
     hotelContainer: {
-        marginBottom: 20,
+        width: '95%',
+        marginBottom: 30,
+        alignItems: 'center',
+        justifyContent: 'center', 
+        alignSelf: 'center',
+        borderWidth: 5,
+        borderColor: '#10b981',
+        borderRadius: 10,
+    },
+    hotelImage: {
+        width: '100%', 
+        aspectRatio: 16/9,
+        height: undefined, 
+        marginBottom: 10,
+        borderRadius: 10, 
     },
     hotelName: {
         fontSize: 18,
         fontWeight: 'bold',
+        textAlign: 'center', 
     },
     hotelAddress: {
         fontSize: 16,
+        textAlign: 'center', 
     },
 });
 
