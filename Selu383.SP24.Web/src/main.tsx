@@ -1,10 +1,23 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import HomePage from "./routes/_layout.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import { CachePolicies, Provider } from "use-http";
+import Login from "./routes/home/login";
+import MainLayout from "./routes/_layout";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      { path: "/login", element: <Login /> },
+      // More Routes Here
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <HomePage />
-  </React.StrictMode>
+  <Provider options={{ cache: CachePolicies.NO_CACHE, cacheLife: 16 }}>
+    <RouterProvider router={router} />
+  </Provider>
 );
