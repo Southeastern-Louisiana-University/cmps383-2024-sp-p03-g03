@@ -52,7 +52,7 @@ export default function App() {
         <Drawer.Screen name="Hotels" 
         component={HotelsScreen}
         options={{
-          drawerLabel: 'Hotels',
+          drawerLabel: 'All Hotels (improved)',
           title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
@@ -68,7 +68,7 @@ export default function App() {
         <Drawer.Screen name="Reservation" 
         component={Reservation}
         options={{
-          drawerLabel: 'Reservation',
+          drawerLabel: 'Reservation Form',
           title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
@@ -84,7 +84,7 @@ export default function App() {
         <Drawer.Screen name="List Reservations"
         component={ListRes}
         options={{
-          drawerLabel: 'List Reservations',
+          drawerLabel: 'List All Reservations',
           title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
@@ -100,7 +100,7 @@ export default function App() {
         <Drawer.Screen name="List Rooms"
         component={Room}
         options={{
-          drawerLabel: 'List Rooms',
+          drawerLabel: 'List All Rooms',
           title: 'EnStay Hotels',
           headerStyle: {
             backgroundColor: '#10b981',
@@ -117,7 +117,7 @@ export default function App() {
   name="RoomList"
   component={RoomListScreen}
   options={{
-    drawerLabel: 'Room List',
+    drawerLabel: 'List Rooms By Hotel',
     title: 'Room List',
     headerStyle: {
       backgroundColor: '#10b981',

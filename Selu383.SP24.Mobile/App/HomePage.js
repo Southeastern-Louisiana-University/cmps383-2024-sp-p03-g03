@@ -49,6 +49,7 @@ export default function HomePage({ navigation }) {
         onCancel={hideDatePicker}
       /> */
       <View style={styles.content}>
+        <StatusBar backgroundColor="black" />
         <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
         <Text style={styles.welcomeText}>Welcome to EnStay!</Text>
         <Text style={styles.subtitle}>Book your stay with ease.</Text>

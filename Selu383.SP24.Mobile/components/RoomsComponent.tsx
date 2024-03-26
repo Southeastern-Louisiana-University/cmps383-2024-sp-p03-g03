@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import RoomDto from "../features/hotels/RoomDto";
 
@@ -22,46 +22,87 @@ const RoomsComponent: React.FC = () => {
         fetchRooms();
     }, []);
 
+    const handleRoomPress = (room: RoomDto) => {
+        console.log('Room pressed:', room);
+    };
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.heading}>Rooms</Text>
+        <ScrollView 
+        style={styles.container} 
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+        >
+            <Text style={styles.heading}>All Rooms</Text>
             {loading ? (
-                <ActivityIndicator size="large" color="#10b981" />
+                <View style={[styles.loadingContainer, styles.container]}>
+                    <ActivityIndicator size="large" color="#10b981" />
+                </View>
             ) : (
                 <ScrollView style={styles.scrollView}>
                     {rooms.map((room, index) => (
-                        <View key={index} style={styles.reservationContainer}>
-                            <Text style={styles.reservationName}>Hotel -{room.hotelName}</Text>
-                            <Text style={styles.reservationAddress}>Room status: {room.isAvailable ? 'Available' : 'Not Available'}</Text>
-                            <Text style={styles.reservationAddress}>Room type: {room.beds}</Text>
-                        </View>
+                        <TouchableOpacity key={index} onPress={() => handleRoomPress(room)}>
+                            <View style={styles.roomContainer}>
+                                <Image
+                                    source={require('../assets/placeholder5.jpg')}
+                                    style={styles.roomImage}
+                                />
+                                <Text style={styles.roomName}>Hotel - {room.hotelName}</Text>
+                                <Text style={styles.roomInfo}>Room status: {room.isAvailable ? 'Available' : 'Not Available'}</Text>
+                                <Text style={styles.roomInfo}>Room type: {room.beds}</Text>
+                            </View>
+                        </TouchableOpacity>
                     ))}
                 </ScrollView>
             )}
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
         backgroundColor: '#fff',
     },
+    scrollContainer: {
+        flexGrow: 1,
+        paddingVertical: 20,
+    },
+    loadingContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     heading: {
-        fontSize: 24,
+        fontSize: 32,
         fontWeight: 'bold',
         marginBottom: 10,
+        textAlign: 'center',
     },
-    reservationContainer: {
-        marginBottom: 20,
+    roomContainer: {
+        width: '95%',
+        marginBottom: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        borderWidth: 5,
+        borderColor: '#10b981',
+        borderRadius: 10,
+        padding: 20,
     },
-    reservationName: {
+    roomImage: {
+        width: '100%',
+        aspectRatio: 16 / 9,
+        height: undefined,
+        marginBottom: 10,
+        borderRadius: 10,
+    },
+    roomName: {
         fontSize: 18,
         fontWeight: 'bold',
+        textAlign: 'center',
     },
-    reservationAddress: {
+    roomInfo: {
         fontSize: 16,
+        textAlign: 'center',
     },
     scrollView: {
         flex: 1,

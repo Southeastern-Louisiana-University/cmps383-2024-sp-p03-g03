@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, StatusBar } from 'react-native';
 import axios from 'axios';
 import HotelDto from '../features/hotels/HotelDto';
 import { useNavigation } from '@react-navigation/native';
@@ -38,22 +38,25 @@ const HotelsComponent: React.FC = () => {
     }
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <Text style={styles.heading}>Hotels</Text>
-            {hotels.map((hotel, index) => (
-                <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id)}>
-                    <View style={styles.hotelContainer}>
-                        <Image
-                            style={styles.hotelImage}
-                            source={require('../assets/placeholder1.jpg')}
-                        />
-                        <Text style={styles.hotelName}>{hotel.name}</Text>
-                        <Text style={styles.hotelAddress}>{hotel.address}</Text>
-                        <Text style={styles.hotelAddress}>{hotel.cityName}</Text>
-                    </View>
-                </TouchableOpacity>
-            ))}
-        </ScrollView>
+        <View style={styles.container}>
+            <StatusBar backgroundColor="black" />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <Text style={styles.heading}>Hotels</Text>
+                {hotels.map((hotel, index) => (
+                    <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id)}>
+                        <View style={styles.hotelContainer}>
+                            <Image
+                                style={styles.hotelImage}
+                                source={require('../assets/placeholder1.jpg')}
+                            />
+                            <Text style={styles.hotelName}>{hotel.name}</Text>
+                            <Text style={styles.hotelAddress}>{hotel.address}</Text>
+                            <Text style={styles.hotelAddress}>{hotel.cityName}</Text>
+                        </View>
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+        </View>
     );
 };
 
