@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { CachePolicies, Provider } from "use-http";
 import Login from "./routes/home/login";
 import MainLayout from "./routes/_layout";
+import ListHotels from "./routes/find-hotels/list-hotels";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
     children: [],
   },
   { path: "/login", element: <Login /> },
+  { path: "/hotels", element: <ListHotels /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

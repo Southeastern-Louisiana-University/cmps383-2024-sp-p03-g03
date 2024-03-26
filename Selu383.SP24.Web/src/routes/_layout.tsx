@@ -4,7 +4,7 @@ import UserDto from "../features/authentication/UserDto";
 import { useFetch } from "use-http";
 import AuthContext from "../features/authentication/AuthContext";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
@@ -39,6 +39,8 @@ export default function MainLayout() {
     console.log("layout loaded");
   }, []);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <>
       <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}>
@@ -59,16 +61,27 @@ export default function MainLayout() {
               X
             </button>
             <ul>
-              <Button onClick={() => navigate("/login")}>Login</Button>
-              <button>Sign Up</button>
+              <Button className="login-singup-btn" onClick={() => navigate("/login")}>
+                Login
+              </Button>
+              <br />
+              <br />
+              <Button className="login-singup-btn" onClick={() => navigate("/signup")}>
+                Sign Up
+              </Button>
             </ul>
           </div>
 
           <div className="body-content">
-            <div className="address-bar">
-              <input type="text" placeholder="Enter your address" />
-            </div>
-            <button className="book-now-btn">Book Now</button>
+            <label className="location-label" htmlFor="search">
+              What city will you be staying in?
+            </label>
+            <div className="space" />
+            <input className="search-bar" id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")}></input>
+            <div className="space" />
+            <Link className="search-btn" onClick={(e) => (!searchTerm ? e.preventDefault() : null)} to={`/hotels?searchTerm=${encodeURIComponent(searchTerm)}&start=now`} aria-disabled={!searchTerm}>
+              Find Hotels
+            </Link>
           </div>
 
           <footer className="footer">
