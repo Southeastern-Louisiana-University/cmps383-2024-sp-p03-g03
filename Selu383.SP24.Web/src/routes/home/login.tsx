@@ -12,7 +12,7 @@ export default function Login() {
 
   const authContext = useContext(AuthContext);
 
-  const { loading, post } = useFetch("/api/authentication/login", {
+  const { loading, post } = useFetch("https://selu383-sp24-p03-g03.azurewebsites.net/api/authentication/login'", {
     method: "post",
     onNewData: (_, x) => {
       if (typeof x === "string") {

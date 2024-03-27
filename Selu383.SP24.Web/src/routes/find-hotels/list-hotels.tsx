@@ -11,7 +11,7 @@ export default function ListHotels() {
     loading,
     error,
   } = useFetch<HotelDto[]>(
-    "/api/hotels/find",
+    "https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels",
     {
       method: "post",
       body: {

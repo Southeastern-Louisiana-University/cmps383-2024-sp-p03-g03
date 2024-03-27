@@ -10,7 +10,7 @@ export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
 
   useFetch(
-    "/api/authentication/me",
+    "https://selu383-sp24-p03-g03.azurewebsites.net/api/authentication/me",
     {
       onNewData: (_, x) => {
         console.log(x);
@@ -76,9 +76,9 @@ export default function MainLayout() {
             <label className="location-label" htmlFor="search">
               What city will you be staying in?
             </label>
-            <div className="space" />
+            <br />
             <input className="search-bar" id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")}></input>
-            <div className="space" />
+            <br />
             <Link className="search-btn" onClick={(e) => (!searchTerm ? e.preventDefault() : null)} to={`/hotels?searchTerm=${encodeURIComponent(searchTerm)}&start=now`} aria-disabled={!searchTerm}>
               Find Hotels
             </Link>
