@@ -6,8 +6,8 @@ import "../layout.css";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState("galkadi");
-  const [password, setPassword] = useState("Password123!");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const authContext = useContext(AuthContext);

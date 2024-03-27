@@ -5,6 +5,7 @@ import { CachePolicies, Provider } from "use-http";
 import Login from "./routes/home/login";
 import MainLayout from "./routes/_layout";
 import ListHotels from "./routes/find-hotels/list-hotels";
+import Signup from "./routes/home/signup";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   },
   { path: "/login", element: <Login /> },
   { path: "/hotels", element: <ListHotels /> },
+  { path: "/signup", element: <Signup /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
