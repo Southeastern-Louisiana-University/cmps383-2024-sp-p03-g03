@@ -54,7 +54,7 @@ export default function Login() {
               Submit
             </button>
             <button className="close-btn" onClick={() => navigate("/")}>
-              X
+              Back Home
             </button>
           </form>
         </div>
