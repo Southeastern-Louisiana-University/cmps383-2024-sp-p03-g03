@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { HotelDto } from "../../features/hotels/HotelDto";
 import { useFetch } from "use-http";
 
@@ -8,8 +7,9 @@ export default function ListHotels() {
     loading,
     error,
   } = useFetch<HotelDto[]>("https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels", {
-    method: "post",
+    method: "get",
   });
+  console.log(hotels);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -30,9 +30,7 @@ export default function ListHotels() {
       </a>
       <ul>
         {hotels?.map((hotel) => (
-          <li key={hotel.id}>
-            <Link to={`/hotel-details/${hotel.id}`}>{hotel.name}</Link>
-          </li>
+          <li key={hotel.id}></li>
         ))}
       </ul>
     </div>

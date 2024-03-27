@@ -18,7 +18,7 @@ export default function Login() {
       if (typeof x === "string") {
         setError(x);
       } else if (typeof x === "object") {
-        console.log("we logged in as: ");
+        console.log("logged in as: ");
         console.log(x);
         authContext?.setUser(x);
         navigate("/");
@@ -48,7 +48,7 @@ export default function Login() {
             <input className="search-bar" id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" autoComplete="password" required />
             <br />
             <br />
-            {loading ? "Checking Login..." : null}
+            {loading ? "Logging in..." : null}
             {error ? error : null}
             <button className="search-btn" type="submit" disabled={loading}>
               Submit
