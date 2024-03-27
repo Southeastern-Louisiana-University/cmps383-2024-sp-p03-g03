@@ -39,13 +39,13 @@ export default function Login() {
               Username:
             </label>
             <br />
-            <input className="search-bar" id="email" value={userName} onChange={(e) => setUserName(e.target.value)} type="text" autoComplete="email" placeholder="Email" required />
+            <input className="search-bar" id="email" value={userName} onChange={(e) => setUserName(e.target.value)} type="text" autoComplete="email" placeholder="Username" required />
             <br />
             <label className="location-label" htmlFor="password">
               Password:
             </label>
             <br />
-            <input className="search-bar" id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" autoComplete="password" required />
+            <input className="search-bar" id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" autoComplete="password" required />
             <br />
             <br />
             {loading ? "Checking Login..." : null}
