@@ -3,7 +3,6 @@ import "./layout.css";
 import UserDto from "../features/authentication/UserDto";
 import { useFetch } from "use-http";
 import AuthContext from "../features/authentication/AuthContext";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function MainLayout() {
@@ -59,27 +58,27 @@ export default function MainLayout() {
               X
             </button>
             <ul>
-              <Button className="login-singup-btn" onClick={() => navigate("/login")}>
+              <button className="button" onClick={() => navigate("/login")}>
                 Login
-              </Button>
+              </button>
               <br />
               <br />
-              <Button className="login-singup-btn" onClick={() => navigate("/signup")}>
+              <br />
+              <br />
+              <button className="button" onClick={() => navigate("/signup")}>
                 Sign Up
-              </Button>
+              </button>
             </ul>
           </div>
 
           <div className="body-content">
             <label className="location-label" htmlFor="search">
-              What city will you be staying in?
+              Start by finding hotels!
             </label>
             <br />
-            {/* <input className="search-bar" id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")}></input> */}
-            <br />
-            <Button className="search-btn" onClick={() => navigate("/hotels")}>
+            <button className="button" onClick={() => navigate("/hotels")}>
               List Hotels
-            </Button>
+            </button>
           </div>
 
           <footer className="footer">
