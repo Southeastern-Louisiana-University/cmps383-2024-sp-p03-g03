@@ -12,7 +12,7 @@ export default function Login() {
 
   const authContext = useContext(AuthContext);
 
-  const { loading, post } = useFetch("https://selu383-sp24-p03-g03.azurewebsites.net/api/authentication/login'", {
+  const { loading, post } = useFetch("https://selu383-sp24-p03-g03.azurewebsites.net/api/authentication/login", {
     method: "post",
     onNewData: (_, x) => {
       if (typeof x === "string") {
@@ -50,7 +50,7 @@ export default function Login() {
             <br />
             {loading ? "Checking Login..." : null}
             {error ? error : null}
-            <button className="search-btn" type="submit" disabled={loading} onClick={() => navigate("/")}>
+            <button className="search-btn" type="submit" disabled={loading}>
               Submit
             </button>
             <button className="close-btn" onClick={() => navigate("/")}>

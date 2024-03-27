@@ -1,25 +1,15 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { HotelDto } from "../../features/hotels/HotelDto";
 import { useFetch } from "use-http";
 
 export default function ListHotels() {
-  const [params] = useSearchParams();
-  const searchTerm = params.get("searchTerm");
-
   const {
     data: hotels,
     loading,
     error,
-  } = useFetch<HotelDto[]>(
-    "https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels",
-    {
-      method: "post",
-      body: {
-        searchTerm: searchTerm,
-      },
-    },
-    [searchTerm]
-  );
+  } = useFetch<HotelDto[]>("https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels", {
+    method: "post",
+  });
 
   if (loading) {
     return <div>Loading...</div>;
@@ -35,7 +25,6 @@ export default function ListHotels() {
 
   return (
     <div>
-      <p>{searchTerm}</p>
       <div>Found these hotels</div>
       <ul>
         {hotels?.map((hotel) => (

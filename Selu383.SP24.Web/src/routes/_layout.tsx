@@ -4,7 +4,7 @@ import UserDto from "../features/authentication/UserDto";
 import { useFetch } from "use-http";
 import AuthContext from "../features/authentication/AuthContext";
 import { Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
@@ -38,8 +38,6 @@ export default function MainLayout() {
   useEffect(() => {
     console.log("layout loaded");
   }, []);
-
-  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <>
@@ -77,11 +75,11 @@ export default function MainLayout() {
               What city will you be staying in?
             </label>
             <br />
-            <input className="search-bar" id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")}></input>
+            {/* <input className="search-bar" id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")}></input> */}
             <br />
-            <Link className="search-btn" onClick={(e) => (!searchTerm ? e.preventDefault() : null)} to={`/hotels?searchTerm=${encodeURIComponent(searchTerm)}&start=now`} aria-disabled={!searchTerm}>
-              Find Hotels
-            </Link>
+            <Button className="search-btn" onClick={() => navigate("/hotels")}>
+              List Hotels
+            </Button>
           </div>
 
           <footer className="footer">
