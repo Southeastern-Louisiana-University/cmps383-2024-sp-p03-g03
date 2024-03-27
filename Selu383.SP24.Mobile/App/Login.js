@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
 
 const SignInScreen = () => {
 
@@ -62,6 +62,7 @@ const SignInScreen = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="black" />
       <TextInput
         style={styles.input}
         placeholder="Username"

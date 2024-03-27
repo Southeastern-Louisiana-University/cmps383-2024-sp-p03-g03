@@ -9,6 +9,7 @@ export default function ReservationPage({ navigation }) {
   const [hotel, setHotel] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDateType, setSelectedDateType] = useState('');
+  const [roomType, setRoomType] = useState('');
 
   const showDatePicker = (dateType) => {
     setDatePickerVisibility(true);
@@ -32,9 +33,9 @@ export default function ReservationPage({ navigation }) {
     <View style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="dark-content"/>
       <View style={styles.content}>
-        <Image source={require('../assets/placeholder2.jpg')} style={styles.hotelImage} />
-        <Text style={styles.welcomeText}>Welcome to Enstay!</Text>
-        <Text style={styles.subtitle}>Book your stay with ease.</Text>
+        <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
+        <Text style={styles.welcomeText}>Ready to book?</Text>
+        <Text style={styles.subtitle}>Please fill out the information below.</Text>
         <TouchableOpacity style={styles.dateContainer} onPress={() => showDatePicker('checkIn')}>
           <TextInput
             style={styles.input}
@@ -58,6 +59,12 @@ export default function ReservationPage({ navigation }) {
           onCancel={hideDatePicker}
         />
         <TextInput
+          style={[styles.input, styles.hotelInput]}
+          placeholder="Room Type"
+          value={roomType}
+          onChangeText={setRoomType}
+        />
+        <TextInput
           style={styles.input}
           placeholder="City"
           value={city}
@@ -69,7 +76,7 @@ export default function ReservationPage({ navigation }) {
           value={hotel}
           onChangeText={setHotel}
         />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Confirmation')}>
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
@@ -86,9 +93,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   content: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    maxWidth: 400,
   },
   hotelImage: {
     width: '80%',
@@ -106,7 +114,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   dateContainer: {
-    marginBottom: 15,
+    marginBottom: 10,
+    width: '100%',
   },
   input: {
     backgroundColor: '#fff',
@@ -116,7 +125,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   hotelInput: {
-    marginTop: 10, // Add margin top to create space between city and hotel inputs
+    marginTop: 10, 
+    marginBottom: 10,
+    width: '100%',
   },
   button: {
     backgroundColor: '#10b981',
@@ -124,10 +135,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     marginBottom: 15,
+    width: '100%',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
