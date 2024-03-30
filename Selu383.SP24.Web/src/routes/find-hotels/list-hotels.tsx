@@ -1,38 +1,45 @@
-import { HotelDto } from "../../features/hotels/HotelDto";
+import React, { useEffect } from "react";
 import { useFetch } from "use-http";
+import { HotelDto } from "../../features/hotels/HotelDto"; // Import the HotelDto interface
+import { Card } from "@mui/material";
+import "../layout.css";
 
-export default function ListHotels() {
-  const {
-    data: hotels,
-    loading,
-    error,
-  } = useFetch<HotelDto[]>("https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels", {
-    method: "get",
-  });
-  console.log(hotels);
+const ListHotels = () => {
+  const { data: hotels, loading, error, get } = useFetch<HotelDto[]>("/api/hotels");
+
+  useEffect(() => {
+    get(); // Fetch data when component mounts
+  }, [get]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    return (
-      <div>
-        Error... <button type="button"> try again</button>
-      </div>
-    );
+    return <div>Error: {error.message}</div>;
   }
 
   return (
     <div>
-      <a href="/" className="close-btn">
-        Back Home
-      </a>
+      <h1>Hotel List</h1>
       <ul>
-        {hotels?.map((hotel) => (
-          <li key={hotel.id}></li>
-        ))}
+        {hotels &&
+          hotels.map(
+            (
+              hotel: HotelDto // Specify the type of 'hotel' parameter
+            ) => (
+              <Card className="hotel-cards">
+                <li key={hotel.id}>
+                  <div>Name: {hotel.name}</div>
+                  <div>Address: {hotel.address}</div>
+                  {/* Add more hotel details as needed */}
+                </li>
+              </Card>
+            )
+          )}
       </ul>
     </div>
   );
-}
+};
+
+export default ListHotels;
