@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+// ListHotels.jsx
+import { useEffect } from "react";
 import { useFetch } from "use-http";
 import { HotelDto } from "../../features/hotels/HotelDto"; // Import the HotelDto interface
-import { Card } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import "../layout.css";
 
 const ListHotels = () => {
@@ -22,22 +23,27 @@ const ListHotels = () => {
   return (
     <div>
       <h1>Hotel List</h1>
-      <ul>
+      <div className="hotel-list">
         {hotels &&
-          hotels.map(
-            (
-              hotel: HotelDto // Specify the type of 'hotel' parameter
-            ) => (
-              <Card className="hotel-cards">
-                <li key={hotel.id}>
-                  <div>Name: {hotel.name}</div>
-                  <div>Address: {hotel.address}</div>
-                  {/* Add more hotel details as needed */}
-                </li>
-              </Card>
-            )
-          )}
-      </ul>
+          hotels.map((hotel: HotelDto) => (
+            <Card key={hotel.id} className="hotel-card">
+              <img
+                src="Hotel-Picture.jpg" // Placeholder image URLs
+                alt="Hotel Placeholder"
+                className="card-image"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {hotel.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Address: {hotel.address}
+                </Typography>
+                {/* Add more hotel details as needed */}
+              </CardContent>
+            </Card>
+          ))}
+      </div>
     </div>
   );
 };
