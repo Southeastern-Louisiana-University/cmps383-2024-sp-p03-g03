@@ -163,6 +163,7 @@ body {
 
 .hotel-card {
   margin: 10px;
+  cursor: pointer;
 }
 
 .card-image {

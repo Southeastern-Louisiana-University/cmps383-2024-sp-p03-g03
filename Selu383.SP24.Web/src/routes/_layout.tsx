@@ -2,9 +2,28 @@ import { useEffect, useState } from "react";
 import "./layout.css";
 
 import { useNavigate } from "react-router-dom";
+import useFetch from "use-http";
+import AuthContext from "../features/authentication/AuthContext";
+import UserDto from "../features/authentication/UserDto";
 
 export default function MainLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
+
+  useFetch(
+    "api/authentication/me",
+    {
+      onNewData: (_, x) => {
+        console.log(x);
+        if (typeof x === "object") {
+          setCurrentUser(x);
+        } else {
+          setCurrentUser(null);
+        }
+      },
+    },
+    []
+  );
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,6 +41,7 @@ export default function MainLayout() {
 
   return (
     <>
+      <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
       <div className={`body ${isMenuOpen ? "menu-open" : ""}`}>
         <div className="container">
           <header className="header">
@@ -42,8 +62,6 @@ export default function MainLayout() {
             <button className="button" onClick={() => navigate("/login")}>
               Login
             </button>
-            <br />
-            <br />
             <br />
             <br />
             <button className="button" onClick={() => navigate("/signup")}>
