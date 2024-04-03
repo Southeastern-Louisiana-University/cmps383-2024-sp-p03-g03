@@ -142,28 +142,17 @@ body {
   cursor: pointer;
 }
 
-.button {
-  color: #ffff;
-  font: bold 11px Arial;
-  text-decoration: none;
-  background-color: #10b986;
-  padding: 6px 11px 6px 11px;
-  border-top: 1px solid #cccccc;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #cccccc;
-  cursor: pointer;
-}
-
 .hotel-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center; /* Center the cards horizontally */
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .hotel-card {
-  margin: 10px;
   cursor: pointer;
+  width: 80vw;
 }
 
 .card-image {
