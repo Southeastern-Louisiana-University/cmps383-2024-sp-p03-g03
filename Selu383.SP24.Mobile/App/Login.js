@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const SignInScreen = () => {
+  const navigation = useNavigation();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +27,8 @@ const SignInScreen = () => {
         setUserData(userDataResponse.data);
         setUsername('');
         setPassword('');
+
+        navigation.navigate('UserReservation');
       } else {
         console.error('Login failed');
         setError('Login failed');

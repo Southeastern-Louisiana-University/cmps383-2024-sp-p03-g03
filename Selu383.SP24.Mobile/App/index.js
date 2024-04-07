@@ -6,6 +6,7 @@ import LoginScreen from './Login';
 import HotelsScreen from './Hotel';
 import ListRes from './listRes';
 import Room from './Room';
+import UserReservationsScreen from './UserReservation';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Reservation from './Reservation';
@@ -119,6 +120,23 @@ export default function App() {
   options={{
     drawerLabel: 'List Rooms By Hotel',
     title: 'Room List',
+    headerStyle: {
+      backgroundColor: '#10b981',
+    },
+    headerTintColor: 'white',
+    headerTitleAlign: 'center',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+  }}
+/>
+<Drawer.Screen
+  name="UserReservation"
+  component={UserReservationsScreen}
+  options={{
+    drawerLabel: 'User Reservations',
+    title: 'User Reservations',
     headerStyle: {
       backgroundColor: '#10b981',
     },

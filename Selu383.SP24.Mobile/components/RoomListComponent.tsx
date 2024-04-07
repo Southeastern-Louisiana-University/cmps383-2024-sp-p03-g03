@@ -49,7 +49,8 @@ const RoomListComponent: React.FC = () => {
         showsVerticalScrollIndicator={false}
         >
             <Text style={styles.heading}>Rooms for Hotel {hotelId}</Text>
-            {rooms.map((room, index) => (
+            {rooms.map((room) => (
+                <View key={room.id}>
                
                     <View style={styles.roomContainer}>
                         <Image
@@ -59,7 +60,8 @@ const RoomListComponent: React.FC = () => {
                         <Text style={styles.roomName}>{room.hotelName}</Text>
                         <Text style={styles.roomInfo}>Room Type - {room.beds}</Text>
                         <Text style={styles.roomInfo}>Room Number - {room.id}</Text>
-                    </View>
+                    </View> 
+                </View>
     
             ))}
         </ScrollView>
