@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import { useRoute } from '@react-navigation/native';
 import RoomDto from '../features/hotels/RoomDto';
 
+interface RouteParams {
+    hotelId: number;
+    hotelName: string
+}
+
 const RoomListComponent: React.FC = () => {
-    const [currentHotelId, setCurrentHotelId] = useState<number>(5);
     const [rooms, setRooms] = useState<RoomDto[]>([]);
     const [loading, setLoading] = useState(true);
+    const route = useRoute();
+    const { hotelId , hotelName} = route.params as RouteParams;
 
     useEffect(() => {
         const fetchRooms = async () => {
             try {
-                const response = await axios.get<RoomDto[]>(`https://selu383-sp24-p03-g03.azurewebsites.net/api/rooms/byhotel/${currentHotelId}`);
+                const response = await axios.get<RoomDto[]>(`https://selu383-sp24-p03-g03.azurewebsites.net/api/rooms/byhotel/${hotelId}`);
+                console.log('Hotel ID Recieved:', hotelId);
                 setRooms(response.data);
                 setLoading(false);
             } catch (error) {
@@ -21,15 +29,9 @@ const RoomListComponent: React.FC = () => {
         };
 
         fetchRooms();
-    }, [currentHotelId]);
+    }, [hotelId]);
 
-    const handleRoomPress = (room: RoomDto) => {
-        console.log('Room pressed:', room);
-    };
     
-    const changeHotel = () => {
-        setCurrentHotelId(prevHotelId => prevHotelId === 8 ? 5 : prevHotelId + 1);
-    };
 
     if (loading) {
         return (
@@ -47,12 +49,10 @@ const RoomListComponent: React.FC = () => {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
         >
-            <TouchableOpacity style={styles.button} onPress={changeHotel}>
-                <Text style={styles.buttonText}>Change Hotel</Text>
-            </TouchableOpacity>
-            <Text style={styles.heading}>Rooms for Hotel {currentHotelId}</Text>
-            {rooms.map((room, index) => (
-                <TouchableOpacity key={index} onPress={() => handleRoomPress(room)}>
+            <Text style={styles.heading}>Rooms for {hotelName}</Text>
+            {rooms.map((room) => (
+                <View key={room.id}>
+               
                     <View style={styles.roomContainer}>
                         <Image
                             source={imageSource}
@@ -61,8 +61,9 @@ const RoomListComponent: React.FC = () => {
                         <Text style={styles.roomName}>{room.hotelName}</Text>
                         <Text style={styles.roomInfo}>Room Type - {room.beds}</Text>
                         <Text style={styles.roomInfo}>Room Number - {room.id}</Text>
-                    </View>
-                </TouchableOpacity>
+                    </View> 
+                </View>
+    
             ))}
         </ScrollView>
     );

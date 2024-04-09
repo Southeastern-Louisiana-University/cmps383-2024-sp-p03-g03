@@ -1,19 +1,32 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar, TextInput, Alert } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import axios from 'axios';
 
 export default function ReservationPage({ navigation }) {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [city, setCity] = useState('');
   const [hotel, setHotel] = useState('');
+  const [roomType, setRoomType] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDateType, setSelectedDateType] = useState('');
-  const [roomType, setRoomType] = useState('');
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setCheckInDate('');
+      setCheckOutDate('');
+      setCity('');
+      setHotel('');
+      setRoomType('');
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const showDatePicker = (dateType) => {
-    setDatePickerVisibility(true);
     setSelectedDateType(dateType);
+    setDatePickerVisibility(true);
   };
 
   const hideDatePicker = () => {
@@ -22,11 +35,41 @@ export default function ReservationPage({ navigation }) {
 
   const handleConfirm = (date) => {
     if (selectedDateType === 'checkIn') {
-      setCheckInDate(date.toDateString());
+      setCheckInDate(date.toISOString());
     } else {
-      setCheckOutDate(date.toDateString());
+      setCheckOutDate(date.toISOString());
     }
     hideDatePicker();
+  };
+
+  const handleSubmit = async () => {
+    try {
+
+      const existingReservations = await axios.get('https://selu383-sp24-p03-g03.azurewebsites.net/api/reservations');
+      const existingReservationNumbers = existingReservations.data.map(reservation => reservation.reservationNumber);
+  
+      let newReservationNumber = 0;
+      do {
+        newReservationNumber = Math.floor(Math.random() * 9999) + 1;
+      } while (existingReservationNumbers.includes(newReservationNumber));
+  
+      const response = await axios.post('https://selu383-sp24-p03-g03.azurewebsites.net/api/reservations', {
+        checkIn: checkInDate,
+        checkOut: checkOutDate,
+        hotelName: hotel,
+        roomId: 1, 
+        userId: 3, 
+        reservationNumber: newReservationNumber
+      });
+  
+      console.log('Reservation submitted:', response.data);
+      Alert.alert('Reservation Submitted', 'Your reservation has been successfully submitted.', [
+        { text: 'OK', onPress: () => navigation.navigate('ReservationPage') }
+      ]);
+    } catch (error) {
+      console.error('Error submitting reservation:', error);
+      Alert.alert('Error', 'Failed to submit reservation. Please try again later.');
+    }
   };
 
   return (
@@ -76,7 +119,7 @@ export default function ReservationPage({ navigation }) {
           value={hotel}
           onChangeText={setHotel}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
