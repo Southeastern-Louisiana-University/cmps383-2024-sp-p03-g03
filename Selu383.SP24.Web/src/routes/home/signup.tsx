@@ -1,3 +1,9 @@
 export default function Signup() {
-  return <> signup page</>;
+  return (
+    <>
+      <a href="/" className="close-btn">
+        Back Home
+      </a>
+    </>
+  );
 }

@@ -25,7 +25,9 @@ export default function ListHotels() {
 
   return (
     <div>
-      <div>Found these hotels</div>
+      <a href="/" className="close-btn">
+        Back Home
+      </a>
       <ul>
         {hotels?.map((hotel) => (
           <li key={hotel.id}>
