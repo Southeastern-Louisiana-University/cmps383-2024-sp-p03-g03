@@ -12,13 +12,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-bottom: 20px;
-  padding-top: 100px;
+  padding-top: 120px;
 }
 
 .hotel-card {
   cursor: pointer;
   width: 80vw;
+  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .card-image {

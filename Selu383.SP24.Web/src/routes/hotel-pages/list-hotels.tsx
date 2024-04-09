@@ -54,6 +54,9 @@ const ListHotels = () => {
                   <Typography variant="body2" color="text.secondary">
                     Address: {hotel.address}
                   </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    City: {hotel.cityName}
+                  </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
