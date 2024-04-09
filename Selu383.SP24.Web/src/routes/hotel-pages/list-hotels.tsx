@@ -25,15 +25,17 @@ const ListHotels = () => {
 
   return (
     <div>
-      <AppBar color="success" position="static">
+      <AppBar color="success" position="fixed">
         <Toolbar sx={{ padding: 1 }}>
           <IconButton size="large" edge="start" color="inherit" aria-label="menu">
             <MenuIcon fontSize="inherit" />
           </IconButton>
-          <Typography align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30 }}>
+          <Typography onClick={() => navigate("/")} align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
             Hotels
           </Typography>
-          <Button onClick={() => navigate("/")}>Back Home</Button>
+          <Button onClick={() => navigate("/")} variant="contained" color="success">
+            Back Home
+          </Button>
         </Toolbar>
       </AppBar>
 
@@ -52,7 +54,6 @@ const ListHotels = () => {
                   <Typography variant="body2" color="text.secondary">
                     Address: {hotel.address}
                   </Typography>
-                  {/* Add more hotel details as needed */}
                 </CardContent>
               </CardActionArea>
             </Card>

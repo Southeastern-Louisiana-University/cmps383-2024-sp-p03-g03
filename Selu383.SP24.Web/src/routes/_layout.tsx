@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "use-http";
 import AuthContext from "../features/authentication/AuthContext";
 import UserDto from "../features/authentication/UserDto";
-import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography } from "@mui/material";
+import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Drawer, Divider, List, ListItem } from "@mui/material";
 import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -15,8 +15,13 @@ export default function MainLayout() {
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const toggleDrawer = (newOpenDrawer: boolean) => () => {
+    setOpenDrawer(newOpenDrawer);
+  };
 
   useEffect(() => {
     console.log("layout loaded");
@@ -49,14 +54,29 @@ export default function MainLayout() {
     p: 4,
   };
 
+  const DrawerList = (
+    <Box sx={{ width: 200 }} role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+        <ListItem></ListItem>
+      </List>
+      <Divider />
+      <List>
+        <ListItem></ListItem>
+      </List>
+    </Box>
+  );
+
   return (
     <>
       <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar color="success" position="static">
+        <AppBar color="success" position="fixed">
           <Toolbar sx={{ padding: 1 }}>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+            <IconButton onClick={toggleDrawer(true)} size="large" edge="start" color="inherit" aria-label="menu">
               <MenuIcon fontSize="inherit" />
+              <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+                {DrawerList}
+              </Drawer>
             </IconButton>
             <Typography align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30 }}>
               EnStay
@@ -69,17 +89,17 @@ export default function MainLayout() {
       </Box>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Button onClick={() => navigate("/login")}>Login</Button>
-          <Button onClick={() => navigate("/signup")}>Sign up</Button>
+          <Button variant="contained" color="success" onClick={() => navigate("/login")}>
+            Login
+          </Button>
+
+          <Button variant="contained" color="success" onClick={() => navigate("/signup")}>
+            Sign up
+          </Button>
         </Box>
       </Modal>
-
       <div className="body-content">
-        <label className="location-label" htmlFor="search">
-          Start by finding hotels!
-        </label>
-        <br />
-        <Button className="button" onClick={() => navigate("/hotels")} variant="contained" color="success">
+        <Button onClick={() => navigate("/hotels")} variant="contained" color="success">
           List Hotels
         </Button>
       </div>
