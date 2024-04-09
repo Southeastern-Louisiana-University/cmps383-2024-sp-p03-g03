@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar, TextInput, ScrollView } from 'react-native'; // Import ScrollView
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function HomePage({ navigation }) {
@@ -49,18 +49,20 @@ export default function HomePage({ navigation }) {
         onCancel={hideDatePicker}
         textColor='#10b981'
       />
-      <View style={styles.content}>
-        <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
-        <Text style={styles.welcomeText}>Welcome to EnStay!</Text>
-        <Text style={styles.subtitle}>Book your stay with ease.</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reservation')}>
-          <Text style={styles.buttonText}>Book Now</Text>
-        </TouchableOpacity>
-        <Text style={styles.subtitle}>Need to check in?</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.buttonText}>Check In</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView>
+        <View style={styles.content}>
+          <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
+          <Text style={styles.welcomeText}>Welcome to EnStay!</Text>
+          <Text style={styles.subtitle}>Book your stay with ease.</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reservation')}>
+            <Text style={styles.buttonText}>Book Now</Text>
+          </TouchableOpacity>
+          <Text style={styles.subtitle}>Need to check in?</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.buttonText}>Check In</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 } 
@@ -93,7 +95,6 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   content: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,

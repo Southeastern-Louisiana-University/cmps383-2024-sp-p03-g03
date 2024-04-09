@@ -6,13 +6,14 @@ import RoomDto from '../features/hotels/RoomDto';
 
 interface RouteParams {
     hotelId: number;
+    hotelName: string
 }
 
 const RoomListComponent: React.FC = () => {
     const [rooms, setRooms] = useState<RoomDto[]>([]);
     const [loading, setLoading] = useState(true);
     const route = useRoute();
-    const { hotelId } = route.params as RouteParams;
+    const { hotelId , hotelName} = route.params as RouteParams;
 
     useEffect(() => {
         const fetchRooms = async () => {
@@ -48,8 +49,9 @@ const RoomListComponent: React.FC = () => {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
         >
-            <Text style={styles.heading}>Rooms for Hotel {hotelId}</Text>
-            {rooms.map((room, index) => (
+            <Text style={styles.heading}>Rooms for {hotelName}</Text>
+            {rooms.map((room) => (
+                <View key={room.id}>
                
                     <View style={styles.roomContainer}>
                         <Image
@@ -59,7 +61,8 @@ const RoomListComponent: React.FC = () => {
                         <Text style={styles.roomName}>{room.hotelName}</Text>
                         <Text style={styles.roomInfo}>Room Type - {room.beds}</Text>
                         <Text style={styles.roomInfo}>Room Number - {room.id}</Text>
-                    </View>
+                    </View> 
+                </View>
     
             ))}
         </ScrollView>
