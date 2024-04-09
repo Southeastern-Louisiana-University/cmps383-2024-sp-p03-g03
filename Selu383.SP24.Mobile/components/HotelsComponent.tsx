@@ -24,9 +24,9 @@ const HotelsComponent: React.FC = () => {
         fetchHotels();
     }, []);
 
-    const handleHotelPress = (hotelId: number) => {
-        console.log('Hotel ID:', hotelId);
-        navigation.navigate('RoomList', { hotelId });
+    const handleHotelPress = (hotelId: number, hotelName: string) => {
+        console.log('Hotel ID:', hotelId, 'Hotel Name:', hotelName);
+        navigation.navigate('RoomList', { hotelId, hotelName });
     };
 
     if (loading) {
@@ -43,7 +43,7 @@ const HotelsComponent: React.FC = () => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Text style={styles.heading}>Hotels</Text>
                 {hotels.map((hotel, index) => (
-                    <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id)}>
+                    <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id, hotel.name)}>
                         <View style={styles.hotelContainer}>
                             <Image
                                 style={styles.hotelImage}

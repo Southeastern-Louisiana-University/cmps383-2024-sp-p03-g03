@@ -1,59 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import ReservationDto from "../features/hotels/ReservationDto";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 const UserReservationsComponent: React.FC = () => {
     const [reservations, setReservations] = useState<ReservationDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [userId, setUserId] = useState<number | null>(null);
     const [authError, setAuthError] = useState(false);
+    const isFocused = useIsFocused();
     const navigation = useNavigation<any>();
 
     const fetchUserId = async () => {
         try {
             const response = await axios.get('https://selu383-sp24-p03-g03.azurewebsites.net/api/authentication/me');
-
-            if (response.status !== 200) 
-            {
+    
+            if (response.status !== 200) {
                 setAuthError(true);
                 setLoading(false);
             } else {
                 setAuthError(false);
-
                 setUserId(response.data.id);
             }
-            //setUserId(response.data.id);
         } catch (error) {
             console.error('Error fetching user ID:', error);
             if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
                 setAuthError(true);
             }
+            setLoading(false);
         }
     };
 
     const fetchUserReservations = async () => {
         try {
             if (!userId) return; 
-
+    
             const response = await axios.get<ReservationDto[]>(`https://selu383-sp24-p03-g03.azurewebsites.net/api/reservations/user/${userId}`);
             setReservations(response.data);
-            setLoading(false);
         } catch (error) {
             console.error('Error fetching reservations:', error);
+        } finally {
+            setLoading(false);
         }
     };
-    
-    useEffect(() => {
-        fetchUserId();
-    }, []);
 
     useEffect(() => {
-        if (userId !== null) {
+        const fetchData = async () => {
+            try {
+                await fetchUserId();
+            } catch (error) {
+                console.error('Error fetching user ID:', error);
+            }
+        };
+    
+        fetchData();
+    }, [isFocused]);
+
+    useEffect(() => {
+        if (userId) {
             fetchUserReservations();
-        } else {
-            setLoading(false);
         }
     }, [userId]);
 
@@ -94,49 +100,41 @@ const UserReservationsComponent: React.FC = () => {
         );
     };
 
-    const refreshPage = () => {
-        setLoading(true);
-        fetchUserId();
-    };
-
     return (
-        <TouchableOpacity activeOpacity={1} onPress={refreshPage}>
-            <ScrollView contentContainerStyle={styles.scrollView}>
-                <View style={styles.container}>
-                    {authError ? (
-                        <View style={styles.reservationContainer}>
-                            <Text style={styles.reservationName}>You are not logged in.</Text>
-                            <TouchableOpacity onPress={navigateToLogin} style={styles.button}>
-                                <Text style={styles.buttonText}>Login</Text>
-                            </TouchableOpacity>
-                        </View>
-                    ) : (
-                        <>
-                            <Text style={styles.heading}>Your Reservations</Text>
-                            {loading ? (
-                                <ActivityIndicator size="large" color="#10b981" />
-                            ) : (
-                                reservations.map((reservation) => (
-                                    <View key={reservation.id} style={styles.reservationContainer}>
-                                        <TouchableOpacity onPress={() => handleDeleteReservation(reservation.id)} style={styles.deleteButton}>
-                                            <Text style={styles.deleteText}>X</Text>
-                                        </TouchableOpacity>
-                                        <View style={styles.reservationInfo}>
-                                            <Text style={styles.reservationName}>Hotel - {reservation.hotelName}</Text>
-                                            <Text style={styles.reservationDetail}>Reservation Number: {reservation.reservationNumber}</Text>
-                                            <Text style={styles.reservationDetail}>Room ID: {reservation.roomId}</Text>
-                                            <Text style={styles.reservationDetail}>UserID: {reservation.userId}</Text>
-                                            <Text style={styles.reservationDetail}>Check-In: {formatDate(reservation.checkIn)}</Text>
-                                            <Text style={styles.reservationDetail}>Check-Out: {formatDate(reservation.checkOut)}</Text>
-                                        </View>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+            <View style={styles.container}>
+                {authError ? (
+                    <View style={styles.reservationContainer}>
+                        <Text style={styles.notLoggedInMessage}>You are not logged in.</Text>
+                        <Text style={styles.notLoggedInMessage}>Please sign in to continue.</Text>
+                        <TouchableOpacity onPress={navigateToLogin} style={styles.button}>
+                            <Text style={styles.buttonText}>Login</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <>
+                        <Text style={styles.heading}>Your Reservations</Text>
+                        {loading ? (
+                            <ActivityIndicator size="large" color="#10b981" />
+                        ) : (
+                            reservations.map((reservation) => (
+                                <View key={reservation.id} style={styles.reservationContainer}>
+                                    <TouchableOpacity onPress={() => handleDeleteReservation(reservation.id)} style={styles.deleteButton}>
+                                        <Text style={styles.deleteText}>X</Text>
+                                    </TouchableOpacity>
+                                    <View style={styles.reservationInfo}>
+                                        <Text style={styles.reservationName}>Hotel - {reservation.hotelName}</Text>
+                                        <Text style={styles.reservationDetail}>Reservation Number: {reservation.reservationNumber}</Text>
+                                        <Text style={styles.reservationDetail}>Check-In: {formatDate(reservation.checkIn)}</Text>
+                                        <Text style={styles.reservationDetail}>Check-Out: {formatDate(reservation.checkOut)}</Text>
                                     </View>
-                                ))
-                            )}
-                        </>
-                    )}
-                </View>
-            </ScrollView>
-        </TouchableOpacity>
+                                </View>
+                            ))
+                        )}
+                    </>
+                )}
+            </View>
+        </ScrollView>
     );
 };
 
@@ -161,9 +159,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center', 
         alignSelf: 'center',
-        borderWidth: 5,
+        borderWidth: 3,
         borderColor: '#10b981',
         borderRadius: 10,
+        padding: 5,
     },
     reservationInfo: {
         flex: 1,
@@ -192,12 +191,20 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginTop: 20,
+        marginBottom: 20,
       },
       buttonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
       },
+      notLoggedInMessage: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'red',
+        marginBottom: 20, 
+    },
 });
 
 export default UserReservationsComponent;

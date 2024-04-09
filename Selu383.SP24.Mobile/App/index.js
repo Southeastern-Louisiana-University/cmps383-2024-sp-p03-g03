@@ -18,6 +18,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
+        
         <Drawer.Screen name="Home" 
         component={HomePage} 
         options={{
@@ -114,12 +115,13 @@ export default function App() {
           },
         }}
         />
-        <Drawer.Screen
-  name="RoomList"
-  component={RoomListScreen}
+        
+<Drawer.Screen
+  name="UserReservation"
+  component={UserReservationsScreen}
   options={{
-    drawerLabel: 'List Rooms By Hotel',
-    title: 'Room List',
+    drawerLabel: 'User Reservations',
+    title: 'User Reservations',
     headerStyle: {
       backgroundColor: '#10b981',
     },
@@ -131,12 +133,13 @@ export default function App() {
     },
   }}
 />
+
 <Drawer.Screen
-  name="UserReservation"
-  component={UserReservationsScreen}
+  name="RoomList"
+  component={RoomListScreen}
   options={{
-    drawerLabel: 'User Reservations',
-    title: 'User Reservations',
+    drawerLabel: 'List Rooms By Hotel',
+    title: 'Room List',
     headerStyle: {
       backgroundColor: '#10b981',
     },
