@@ -30,7 +30,7 @@ export default function Login() {
 
   return (
     <>
-      <AppBar color="success" position="fixed">
+      <AppBar sx={{ bgcolor: "#10b986" }} position="fixed">
         <Toolbar sx={{ padding: 0.8 }}>
           <IconButton size="large" edge="start" color="inherit" aria-label="menu">
             <MenuIcon fontSize="inherit" />
@@ -38,7 +38,7 @@ export default function Login() {
           <Typography onClick={() => navigate("/")} align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
             Login
           </Typography>
-          <Button onClick={() => navigate("/")} variant="contained" color="success">
+          <Button onClick={() => navigate("/")} variant="contained" sx={{ bgcolor: "#10b986" }}>
             Home
           </Button>
         </Toolbar>
@@ -60,7 +60,7 @@ export default function Login() {
           <br />
           {loading ? "Logging in..." : null}
           {error ? error : null}
-          <Button className="Button" disabled={loading}>
+          <Button sx={{ bgcolor: "#10b986" }} variant="contained" disabled={loading}>
             Login
           </Button>
         </form>

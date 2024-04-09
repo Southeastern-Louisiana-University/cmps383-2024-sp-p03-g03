@@ -25,7 +25,7 @@ const ListHotels = () => {
 
   return (
     <div>
-      <AppBar color="success" position="fixed">
+      <AppBar sx={{ bgcolor: "#10b986" }} position="fixed">
         <Toolbar sx={{ padding: 1 }}>
           <IconButton size="large" edge="start" color="inherit" aria-label="menu">
             <MenuIcon fontSize="inherit" />
@@ -33,7 +33,7 @@ const ListHotels = () => {
           <Typography onClick={() => navigate("/")} align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
             Hotels
           </Typography>
-          <Button onClick={() => navigate("/")} variant="contained" color="success">
+          <Button onClick={() => navigate("/")} variant="contained" sx={{ bgcolor: "#10b986" }}>
             Back Home
           </Button>
         </Toolbar>

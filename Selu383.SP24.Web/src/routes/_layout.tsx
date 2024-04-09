@@ -70,7 +70,7 @@ export default function MainLayout() {
     <>
       <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar color="success" position="fixed">
+        <AppBar position="fixed" sx={{ bgcolor: "#10b986" }}>
           <Toolbar sx={{ padding: 1 }}>
             <IconButton onClick={toggleDrawer(true)} size="large" edge="start" color="inherit" aria-label="menu">
               <MenuIcon fontSize="inherit" />
@@ -89,17 +89,17 @@ export default function MainLayout() {
       </Box>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Button variant="contained" color="success" onClick={() => navigate("/login")}>
+          <Button variant="contained" sx={{ bgcolor: "#10b986" }} onClick={() => navigate("/login")}>
             Login
           </Button>
 
-          <Button variant="contained" color="success" onClick={() => navigate("/signup")}>
+          <Button variant="contained" sx={{ bgcolor: "#10b986" }} onClick={() => navigate("/signup")}>
             Sign up
           </Button>
         </Box>
       </Modal>
       <div className="body-content">
-        <Button onClick={() => navigate("/hotels")} variant="contained" color="success">
+        <Button onClick={() => navigate("/hotels")} variant="contained" sx={{ bgcolor: "#10b986" }}>
           List Hotels
         </Button>
       </div>
