@@ -1,9 +1,8 @@
-import { useFetch } from "use-http";
-import { FormEvent, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../features/authentication/AuthContext";
-import "../layout.css";
 import { AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
+import { useState, useContext, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import useFetch from "use-http";
+import AuthContext from "../../features/authentication/AuthContext";
 import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Login() {
@@ -11,7 +10,6 @@ export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const authContext = useContext(AuthContext);
 
   const { loading, post } = useFetch("api/authentication/login", {
@@ -27,6 +25,19 @@ export default function Login() {
       }
     },
   });
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (loading) {
+      return;
+    }
+
+    post({
+      userName: userName,
+      password: password,
+    });
+  }
 
   return (
     <>
@@ -69,6 +80,7 @@ export default function Login() {
           {loading ? "Logging in..." : null}
           {error ? error : null}
           <Button
+            type="submit"
             sx={{
               bgcolor: "#10b986",
               "&:hover": {
@@ -83,17 +95,4 @@ export default function Login() {
       </div>
     </>
   );
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (loading) {
-      return;
-    }
-
-    post({
-      userName: userName,
-      password: password,
-    });
-  }
 }
