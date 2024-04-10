@@ -27,3 +27,8 @@
   height: 150px;
   object-fit: cover;
 }
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* Set the background color */
+}

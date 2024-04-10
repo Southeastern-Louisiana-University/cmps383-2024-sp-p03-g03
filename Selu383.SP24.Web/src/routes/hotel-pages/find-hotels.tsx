@@ -1,26 +1,39 @@
-// ListHotels.jsx
-import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { HotelDto } from "../../features/hotel-dtos/HotelDto";
 import { useFetch } from "use-http";
-import { HotelDto } from "../../features/hotel-dtos/HotelDto"; // Import the HotelDto interface
-import { AppBar, Button, Card, CardActionArea, CardContent, CardMedia, IconButton, Toolbar, Typography } from "@mui/material";
-import "../layout.css";
-import { useNavigate } from "react-router-dom";
+import { Card, CardActionArea, CardMedia, CardContent, Typography, AppBar, Button, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const ListHotels = () => {
-  const { data: hotels, loading, error, get } = useFetch<HotelDto[]>("/api/hotels");
+export default function FindHotel() {
+  const [params] = useSearchParams();
+  const searchTerm = params.get("searchTerm");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    get();
-  }, [get]);
+  const {
+    data: hotels,
+    loading,
+    error,
+  } = useFetch<HotelDto[]>(
+    "/api/hotels/find",
+    {
+      method: "post",
+      body: {
+        searchTerm: searchTerm,
+      },
+    },
+    [searchTerm]
+  );
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div>
+        Error... <button type="button"> try again</button>
+      </div>
+    );
   }
 
   return (
@@ -31,7 +44,7 @@ const ListHotels = () => {
             <MenuIcon fontSize="inherit" />
           </IconButton>
           <Typography onClick={() => navigate("/")} align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
-            Hotels
+            Hotels in your area
           </Typography>
           <Button
             onClick={() => navigate("/")}
@@ -72,6 +85,4 @@ const ListHotels = () => {
       </div>
     </div>
   );
-};
-
-export default ListHotels;
+}

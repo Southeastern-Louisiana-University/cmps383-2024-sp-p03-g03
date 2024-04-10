@@ -38,7 +38,15 @@ export default function Login() {
           <Typography onClick={() => navigate("/")} align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
             Login
           </Typography>
-          <Button onClick={() => navigate("/")} variant="contained" sx={{ bgcolor: "#10b986" }}>
+          <Button
+            onClick={() => navigate("/")}
+            variant="contained"
+            sx={{
+              bgcolor: "#10b986",
+              "&:hover": {
+                bgcolor: "#0a936e", // Adjust the shade to your preference
+              },
+            }}>
             Home
           </Button>
         </Toolbar>
@@ -60,7 +68,15 @@ export default function Login() {
           <br />
           {loading ? "Logging in..." : null}
           {error ? error : null}
-          <Button sx={{ bgcolor: "#10b986" }} variant="contained" disabled={loading}>
+          <Button
+            sx={{
+              bgcolor: "#10b986",
+              "&:hover": {
+                bgcolor: "#0a936e", // Adjust the shade to your preference
+              },
+            }}
+            variant="contained"
+            disabled={loading}>
             Login
           </Button>
         </form>
