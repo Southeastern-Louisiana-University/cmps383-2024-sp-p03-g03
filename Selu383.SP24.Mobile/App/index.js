@@ -11,6 +11,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Reservation from './Reservation';
 import RoomListScreen from './RoomListScreen';
+import HotelsSearchScreen from './HotelSearch';
 
 const Drawer = createDrawerNavigator();
 
@@ -151,6 +152,23 @@ export default function App() {
     },
   }}
 />
+
+<Drawer.Screen name="HotelsSearch" 
+        component={HotelsSearchScreen}
+        options={{
+          drawerLabel: 'Hotels Search',
+          title: 'EnStay Hotels',
+          headerStyle: {
+            backgroundColor: '#10b981',
+          },
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+          },
+        }}
+        />
 
       </Drawer.Navigator>
     </NavigationContainer>

@@ -6,6 +6,7 @@ export default function HomePage({ navigation }) {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const showDatePicker = (dateType) => {
     setDatePickerVisibility(true);
@@ -25,6 +26,10 @@ export default function HomePage({ navigation }) {
     hideDatePicker();
   };
 
+  const handleSearch = () => {
+    navigation.navigate('HotelsSearch', { searchTerm });
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="dark-content"/>
@@ -32,7 +37,12 @@ export default function HomePage({ navigation }) {
         <TextInput
           style={styles.searchInput}
           placeholder="Where are you headed?"
+          value={searchTerm}
+          onChangeText={setSearchTerm}
         />
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+          <Text style={styles.searchButtonText}>Search</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.dateContainer}>
         <TouchableOpacity onPress={() => showDatePicker('checkIn')}>
@@ -76,13 +86,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   searchInput: {
+    flex: 1,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     paddingHorizontal: 10,
     height: 40,
+    marginRight: 10,
+  },
+  searchButton: {
+    backgroundColor: '#10b981',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+  },
+  searchButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   dateContainer: {
     flexDirection: 'row',
