@@ -7,6 +7,7 @@ export default function HomePage({ navigation }) {
   const [checkOutDate, setCheckOutDate] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const showDatePicker = (dateType) => {
     setDatePickerVisibility(true);
@@ -21,12 +22,26 @@ export default function HomePage({ navigation }) {
     if (isDatePickerVisible === 'checkIn') {
       setCheckInDate(date.toDateString());
     } else {
-      setCheckOutDate(date.toDateString());
+      if (date < new Date(checkInDate)) {
+        setErrorMessage('Please select a check-out date after the check-in date.');
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);
+      } else {
+        setCheckOutDate(date.toDateString());
+      }
     }
     hideDatePicker();
   };
 
   const handleSearch = () => {
+    /*if (!checkInDate || !checkOutDate) {
+      setErrorMessage('Please select both check-in and check-out dates.');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000); 
+      return;
+    } */
     navigation.navigate('HotelsSearch', { searchTerm });
   };
 
@@ -59,6 +74,7 @@ export default function HomePage({ navigation }) {
         onCancel={hideDatePicker}
         textColor='#10b981'
       />
+      {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
       <ScrollView>
         <View style={styles.content}>
           <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
@@ -150,5 +166,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  errorMessage: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });

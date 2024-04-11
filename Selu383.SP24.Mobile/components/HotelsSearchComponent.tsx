@@ -48,7 +48,7 @@ const HotelsComponent: React.FC = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="black" />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.heading}>Hotels</Text>
+                <Text style={styles.heading}>Hotels Nearby</Text>
                 {hotels.map((hotel, index) => (
                     <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id, hotel.name)}>
                         <View style={styles.hotelContainer}>
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: '#10b981',
         borderRadius: 10,
+        padding: 20,
     },
     hotelImage: {
         width: '100%', 

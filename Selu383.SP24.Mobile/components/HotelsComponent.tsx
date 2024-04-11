@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: '#10b981',
         borderRadius: 10,
+        padding: 20,
     },
     hotelImage: {
         width: '100%', 
