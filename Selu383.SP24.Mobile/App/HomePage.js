@@ -22,8 +22,8 @@ export default function HomePage({ navigation }) {
     if (isDatePickerVisible === 'checkIn') {
       setCheckInDate(date.toDateString());
     } else {
-      if (date < new Date(checkInDate)) {
-        setErrorMessage('Please select a check-out date after the check-in date.');
+      if (date <= new Date(checkInDate)) {
+        setErrorMessage('Check-out date must be after the check-in date.');
         setTimeout(() => {
           setErrorMessage('');
         }, 3000);
@@ -73,6 +73,7 @@ export default function HomePage({ navigation }) {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
         textColor='#10b981'
+        minimumDate={new Date()}
       />
       {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
       <ScrollView>
