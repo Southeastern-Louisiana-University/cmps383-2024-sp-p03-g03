@@ -5,9 +5,10 @@ import { Link as RouterLink } from "react-router-dom";
 import useFetch from "use-http";
 import AuthContext from "../features/authentication/AuthContext";
 import UserDto from "../features/authentication/UserDto";
-import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Snackbar, Alert, Tooltip, Card } from "@mui/material";
+import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Snackbar, Alert, Tooltip, Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
+import HotelDto from "../features/hotel-dtos/HotelDto";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
@@ -51,6 +52,20 @@ export default function MainLayout() {
       console.error("Logout failed:", error);
     }
   };
+
+  const { data: hotels, loading, error, get } = useFetch<HotelDto[]>("/api/hotels");
+
+  useEffect(() => {
+    get();
+  }, [get]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>
@@ -147,41 +162,56 @@ export default function MainLayout() {
               borderRadius: "25px", // Match the border-radius to the search input
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Add a subtle box shadow
               display: "flex",
-              justifyContent: "space-between",
+              flexDirection: "column", // Change flex direction to column
               alignItems: "center",
             }}>
-            <label htmlFor="search" className="search-bar-text">
-              Where?
-            </label>
-
-            <input className="search-bar" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} />
-
-            <IconButton
-              sx={{
-                bgcolor: "#10b986",
-                "&:hover": {
-                  bgcolor: "#0a936e",
-                },
-                color: "white",
-              }}
-              component={RouterLink}
-              to={searchTerm ? `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now` : "#"}
-              onClick={(e) => (!searchTerm ? e.preventDefault() : null)}
-              aria-disabled={!searchTerm}>
-              <SearchIcon />
-            </IconButton>
-            <Button
-              variant="contained"
-              onClick={() => navigate("/hotels")}
-              sx={{
-                bgcolor: "#10b986",
-                "&:hover": {
-                  bgcolor: "#0a936e",
-                },
-              }}>
-              All Hotels
-            </Button>
+            <div style={{ width: "100%", display: "flex", alignItems: "center" }}>
+              <label htmlFor="search" className="search-bar-text" style={{ marginRight: "10px" }}>
+                Where?
+              </label>
+              <input id="search" className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} style={{ marginRight: "10px" }} />
+              <IconButton
+                size="small"
+                sx={{
+                  bgcolor: "#10b986",
+                  "&:hover": {
+                    bgcolor: "#0a936e",
+                  },
+                  color: "white",
+                  marginRight: "10px",
+                }}
+                component={RouterLink}
+                to={searchTerm ? `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now` : "#"}
+                onClick={(e) => (!searchTerm ? e.preventDefault() : null)}
+                aria-disabled={!searchTerm}>
+                <SearchIcon />
+              </IconButton>
+            </div>
           </Card>
+
+          <div className="hotel-list">
+            {hotels &&
+              hotels.map((hotel: HotelDto) => (
+                <Card className="hotel-card" sx={{ maxWidth: 400 }}>
+                  <CardActionArea key={hotel.id}>
+                    <CardMedia>
+                      <img src="src\assets\istockphoto-1084106348-612x612.jpg" className="card-image" />
+                    </CardMedia>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {hotel.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Address: {hotel.address}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        City: {hotel.cityName}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              ))}
+          </div>
         </div>
       </div>
     </div>
