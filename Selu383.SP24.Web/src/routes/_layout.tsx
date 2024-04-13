@@ -7,6 +7,7 @@ import AuthContext from "../features/authentication/AuthContext";
 import UserDto from "../features/authentication/UserDto";
 import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Snackbar, Alert, Tooltip, Card } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
@@ -132,54 +133,56 @@ export default function MainLayout() {
         </Alert>
       </Snackbar>
 
-      <div className="body-content">
-        <Card
-          sx={{
-            position: "absolute",
-            top: "80px", // Adjust this value according to the height of your header
-            left: "50%",
-            transform: "translateX(-50%)",
-            padding: "15px",
-            backgroundColor: "#10b986",
-            borderRadius: "25px", // Match the border-radius to the search input
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Add a subtle box shadow
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}>
-          <label htmlFor="search" className="white-text">
-            Where?
-          </label>
-
-          <input id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} />
-          <Button
-            variant="contained"
-            size="small"
+      <div className="body">
+        <div className="body-content">
+          <Card
             sx={{
-              bgcolor: "#10b986",
-              "&:hover": {
-                bgcolor: "#0a936e",
-              },
-            }}
-            component={RouterLink}
-            to={searchTerm ? `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now` : "#"}
-            onClick={(e) => (!searchTerm ? e.preventDefault() : null)}
-            aria-disabled={!searchTerm}>
-            Search
-          </Button>
-        </Card>
-        <br />
-        <Button
-          variant="contained"
-          onClick={() => navigate("/hotels")}
-          sx={{
-            bgcolor: "#10b986",
-            "&:hover": {
-              bgcolor: "#0a936e",
-            },
-          }}>
-          List Hotels
-        </Button>
+              width: "80%",
+              position: "absolute",
+              top: "80px", // Adjust this value according to the height of your header
+              left: "50%",
+              transform: "translateX(-50%)",
+              padding: "15px",
+              backgroundColor: "#00000",
+              borderRadius: "25px", // Match the border-radius to the search input
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Add a subtle box shadow
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}>
+            <label htmlFor="search" className="search-bar-text">
+              Where?
+            </label>
+
+            <input className="search-bar" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} />
+
+            <IconButton
+              sx={{
+                bgcolor: "#10b986",
+                "&:hover": {
+                  bgcolor: "#0a936e",
+                },
+                color: "white",
+              }}
+              component={RouterLink}
+              to={searchTerm ? `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now` : "#"}
+              onClick={(e) => (!searchTerm ? e.preventDefault() : null)}
+              aria-disabled={!searchTerm}>
+              <SearchIcon />
+            </IconButton>
+            <Button
+              variant="contained"
+              onClick={() => navigate("/hotels")}
+              sx={{
+                bgcolor: "#10b986",
+                "&:hover": {
+                  bgcolor: "#0a936e",
+                },
+              }}>
+              All Hotels
+            </Button>
+          </Card>
+        </div>
       </div>
     </div>
   );

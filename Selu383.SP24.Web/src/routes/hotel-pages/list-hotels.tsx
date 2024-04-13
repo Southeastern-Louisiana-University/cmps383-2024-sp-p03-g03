@@ -2,10 +2,9 @@
 import { useEffect } from "react";
 import { useFetch } from "use-http";
 import { HotelDto } from "../../features/hotel-dtos/HotelDto"; // Import the HotelDto interface
-import { AppBar, Button, Card, CardActionArea, CardContent, CardMedia, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Card, CardActionArea, CardContent, CardMedia, Toolbar, Typography } from "@mui/material";
 import "../layout.css";
 import { useNavigate } from "react-router-dom";
-import MenuIcon from "@mui/icons-material/Menu";
 
 const ListHotels = () => {
   const { data: hotels, loading, error, get } = useFetch<HotelDto[]>("/api/hotels");
@@ -27,11 +26,8 @@ const ListHotels = () => {
     <div>
       <AppBar sx={{ bgcolor: "#10b986" }} position="fixed">
         <Toolbar sx={{ padding: 1 }}>
-          <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-            <MenuIcon fontSize="inherit" />
-          </IconButton>
-          <Typography onClick={() => navigate("/")} align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
-            Hotels
+          <Typography onClick={() => navigate("/")} align="left" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
+            All Hotels
           </Typography>
           <Button
             onClick={() => navigate("/")}
