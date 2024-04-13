@@ -1,30 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./layout.css";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import useFetch from "use-http";
 import AuthContext from "../features/authentication/AuthContext";
 import UserDto from "../features/authentication/UserDto";
-import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Drawer, Divider, List, ListItem, Snackbar, Alert, Tooltip } from "@mui/material";
+import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Snackbar, Alert, Tooltip, Card } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import MenuIcon from "@mui/icons-material/Menu";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [open, setOpen] = useState(false);
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [showLoginSnackbar, setShowLoginSnackbar] = useState(false);
   const [showLogoutSnackbar, setShowLogoutSnackbar] = useState(false);
   const authContext = useContext(AuthContext);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const toggleDrawer = (newOpenDrawer: boolean) => () => {
-    setOpenDrawer(newOpenDrawer);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,37 +45,18 @@ export default function MainLayout() {
 
     try {
       await post();
-      // The user is successfully logged out, show the logout message
       setShowLogoutSnackbar(true);
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
-  const DrawerList = (
-    <Box sx={{ width: 200 }} role="presentation" onClick={toggleDrawer(false)}>
-      <List>
-        <ListItem></ListItem>
-      </List>
-      <Divider />
-      <List>
-        <ListItem></ListItem>
-      </List>
-    </Box>
-  );
-
   return (
     <div>
       <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
       <AppBar position="fixed" sx={{ bgcolor: "#10b986" }}>
         <Toolbar>
-          <IconButton onClick={toggleDrawer(true)} size="large" edge="start" color="inherit" aria-label="menu">
-            <MenuIcon />
-            <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
-              {DrawerList}
-            </Drawer>
-          </IconButton>
-          <Typography align="center" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 36 }}>
+          <Typography align="left" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 36 }}>
             EnStay
           </Typography>
           <Tooltip title="Profile">
@@ -158,24 +133,41 @@ export default function MainLayout() {
       </Snackbar>
 
       <div className="body-content">
-        <label htmlFor="search">Enter your location:</label>
-        <input id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")}></input>
-        <br />
-        <Button
-          variant="contained"
+        <Card
           sx={{
-            bgcolor: "#10b986",
-            "&:hover": {
-              bgcolor: "#0a936e",
-            },
-          }}
-          className="search-hotel-button"
-          component={RouterLink}
-          to={searchTerm ? `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now` : "#"}
-          onClick={(e) => (!searchTerm ? e.preventDefault() : null)}
-          aria-disabled={!searchTerm}>
-          Search
-        </Button>
+            position: "absolute",
+            top: "80px", // Adjust this value according to the height of your header
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "15px",
+            backgroundColor: "#10b986",
+            borderRadius: "25px", // Match the border-radius to the search input
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Add a subtle box shadow
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+          <label htmlFor="search" className="white-text">
+            Where?
+          </label>
+
+          <input id="search" name="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} />
+          <Button
+            variant="contained"
+            size="small"
+            sx={{
+              bgcolor: "#10b986",
+              "&:hover": {
+                bgcolor: "#0a936e",
+              },
+            }}
+            component={RouterLink}
+            to={searchTerm ? `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now` : "#"}
+            onClick={(e) => (!searchTerm ? e.preventDefault() : null)}
+            aria-disabled={!searchTerm}>
+            Search
+          </Button>
+        </Card>
         <br />
         <Button
           variant="contained"

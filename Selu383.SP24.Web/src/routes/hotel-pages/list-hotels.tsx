@@ -53,7 +53,7 @@ const ListHotels = () => {
             <Card className="hotel-card" sx={{ maxWidth: 400 }}>
               <CardActionArea key={hotel.id}>
                 <CardMedia>
-                  <img src="https://media.istockphoto.com/id/1084106348/photo/apartment-home-residential-building-complex-street-parking.jpg?s=612x612&w=0&k=20&c=CO0zL7cmvkw1r4mvEc0JTC9s2uyhYV9pOhuGuZF9NHU=" className="card-image" />
+                  <img src="src\assets\istockphoto-1084106348-612x612.jpg" className="card-image" />
                 </CardMedia>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">

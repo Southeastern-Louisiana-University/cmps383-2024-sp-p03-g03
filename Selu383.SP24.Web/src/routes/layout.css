@@ -30,5 +30,13 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0; /* Set the background color */
+  background-color: #f0f0f0;
+}
+
+.home-image {
+  height: 45vh;
+  width: 95vw;
+}
+.white-text {
+  color: white;
 }
