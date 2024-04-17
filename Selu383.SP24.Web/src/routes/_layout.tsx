@@ -9,6 +9,7 @@ import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Snackbar, 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import HotelDto from "../features/hotel-dtos/HotelDto";
+import { Link } from "react-router-dom";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
@@ -124,6 +125,7 @@ export default function MainLayout() {
               Login
             </Button>
           )}
+          {/*
           <Button
             variant="contained"
             sx={{
@@ -135,6 +137,7 @@ export default function MainLayout() {
             onClick={() => navigate("/signup")}>
             Sign up
           </Button>
+          */}
         </Box>
       </Modal>
       <Snackbar open={showLoginSnackbar} autoHideDuration={2800} onClose={() => setShowLoginSnackbar(false)}>
