@@ -51,7 +51,7 @@ export default function Login() {
             sx={{
               bgcolor: "#10b986",
               "&:hover": {
-                bgcolor: "#0a936e", // Adjust the shade to your preference
+                bgcolor: "#0a936e",
               },
             }}>
             Home
@@ -81,7 +81,7 @@ export default function Login() {
               sx={{
                 bgcolor: "#10b986",
                 "&:hover": {
-                  bgcolor: "#0a936e", // Adjust the shade to your preference
+                  bgcolor: "#0a936e",
                 },
               }}
               variant="contained"

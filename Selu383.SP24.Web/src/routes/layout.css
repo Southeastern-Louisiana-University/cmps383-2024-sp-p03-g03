@@ -1,6 +1,6 @@
 .body-content {
   display: flex;
-  justify-content: center; /* Center horizontally */
+  justify-content: center;
   padding-top: 120px;
   background-color: #d9d9d9d9;
   height: 100vh;
