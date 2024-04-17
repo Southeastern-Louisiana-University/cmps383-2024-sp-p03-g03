@@ -42,7 +42,6 @@ export default function MainLayout() {
   });
 
   const handleLogout = async () => {
-    // Reset currentUser immediately
     setCurrentUser(null);
 
     try {
@@ -197,7 +196,7 @@ export default function MainLayout() {
                 <Card className="hotel-card" sx={{ maxWidth: 400 }}>
                   <CardActionArea key={hotel.id}>
                     <CardMedia>
-                      <img src="../src/assets/Placeholder-Hotel.jpg" className="card-image" />
+                      <img src="https://t3.ftcdn.net/jpg/00/29/13/38/360_F_29133877_bfA2n7cWV53fto2BomyZ6pyRujJTBwjd.jpg" className="card-image" />
                     </CardMedia>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
