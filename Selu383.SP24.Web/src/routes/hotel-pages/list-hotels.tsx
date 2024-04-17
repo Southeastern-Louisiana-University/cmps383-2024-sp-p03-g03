@@ -1,7 +1,7 @@
 // ListHotels.jsx
 import { useEffect } from "react";
 import { useFetch } from "use-http";
-import { HotelDto } from "../../features/hotel-dtos/HotelDto"; // Import the HotelDto interface
+import { HotelDto } from "../../features/hotel-dtos/HotelDto";
 import { AppBar, Button, Card, CardActionArea, CardContent, CardMedia, Toolbar, Typography } from "@mui/material";
 import "../layout.css";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ const ListHotels = () => {
             sx={{
               bgcolor: "#10b986",
               "&:hover": {
-                bgcolor: "#0a936e", // Adjust the shade to your preference
+                bgcolor: "#0a936e",
               },
             }}>
             Home

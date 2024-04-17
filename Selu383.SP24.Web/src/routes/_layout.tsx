@@ -156,15 +156,15 @@ export default function MainLayout() {
             sx={{
               width: "80%",
               position: "absolute",
-              top: "80px", // Adjust this value according to the height of your header
+              top: "80px",
               left: "50%",
               transform: "translateX(-50%)",
               padding: "15px",
               backgroundColor: "#00000",
-              borderRadius: "25px", // Match the border-radius to the search input
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Add a subtle box shadow
+              borderRadius: "25px",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
               display: "flex",
-              flexDirection: "column", // Change flex direction to column
+              flexDirection: "column",
               alignItems: "center",
             }}>
             <div style={{ width: "100%", display: "flex", alignItems: "center" }}>
@@ -197,7 +197,7 @@ export default function MainLayout() {
                 <Card className="hotel-card" sx={{ maxWidth: 400 }}>
                   <CardActionArea key={hotel.id}>
                     <CardMedia>
-                      <img src="src\assets\istockphoto-1084106348-612x612.jpg" className="card-image" />
+                      <img src="..\src\assets\Placeholder-Hotel.jpg" className="card-image" />
                     </CardMedia>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
