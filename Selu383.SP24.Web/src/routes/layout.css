@@ -17,10 +17,9 @@
 .hotel-card {
   cursor: pointer;
   width: 100vw;
-  height: 40vh;
   margin-bottom: 20px;
-
-  min-height: auto;
+  min-height: 0;
+  flex-grow: 1;
 }
 
 .card-image {
