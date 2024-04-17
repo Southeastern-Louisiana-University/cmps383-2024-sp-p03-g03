@@ -10,14 +10,14 @@
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
-  padding-top: 120px;
+  padding-top: 100px;
 }
 
 .hotel-card {
   cursor: pointer;
   width: 100vw;
-  height: 30vh;
-  margin-right: 20px;
+  height: 40vh;
+  margin-bottom: 20px;
 }
 
 .card-image {

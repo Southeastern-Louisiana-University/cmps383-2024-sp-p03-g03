@@ -190,7 +190,7 @@ export default function MainLayout() {
             </div>
           </Card>
 
-          <div className="hotel-list">
+          <div className="hotel-list" style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
             {hotels &&
               hotels.map((hotel: HotelDto) => (
                 <Card className="hotel-card" sx={{ maxWidth: 400 }}>
