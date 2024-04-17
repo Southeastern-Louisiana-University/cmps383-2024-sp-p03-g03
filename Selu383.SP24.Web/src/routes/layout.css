@@ -1,7 +1,17 @@
 .body-content {
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 80px;
+  padding-right: 20px;
+  background-color: #d9d9d9d9;
+  height: 100vh;
+}
+
+.body-content-login {
+  display: flex;
+  justify-content: center;
+  padding-top: 180px;
+  padding-right: 20px;
   background-color: #d9d9d9d9;
   height: 100vh;
 }
@@ -16,8 +26,9 @@
 .hotel-card {
   cursor: pointer;
   width: 100vw;
-  height: 40vh;
   margin-bottom: 20px;
+  min-height: auto;
+  flex-grow: 1;
 }
 
 .card-image {
