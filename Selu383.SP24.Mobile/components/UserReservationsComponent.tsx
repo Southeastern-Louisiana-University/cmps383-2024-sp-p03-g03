@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator, ScrollView, TouchableOpacity
 import axios from 'axios';
 import ReservationDto from "../features/hotels/ReservationDto";
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { Image } from 'react-native';
 
 const UserReservationsComponent: React.FC = () => {
     const [reservations, setReservations] = useState<ReservationDto[]>([]);
@@ -122,6 +123,7 @@ const UserReservationsComponent: React.FC = () => {
                                     <TouchableOpacity onPress={() => handleDeleteReservation(reservation.id)} style={styles.deleteButton}>
                                         <Text style={styles.deleteText}>X</Text>
                                     </TouchableOpacity>
+                                    <Image source={require('../assets/placeholder6.jpg')} style={styles.roomImage} />
                                     <View style={styles.reservationInfo}>
                                         <Text style={styles.reservationName}>Hotel - {reservation.hotelName}</Text>
                                         <Text style={styles.reservationDetail}>Reservation Number: {reservation.reservationNumber}</Text>
@@ -179,7 +181,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         borderRadius: 10,
         padding: 5,
-        marginLeft: 175,
+        position: 'absolute',
+        top: 5,
+        right: 0,
     },
     deleteText: {
         color: 'white',
@@ -204,6 +208,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'red',
         marginBottom: 20, 
+    },
+    roomImage: {
+        width: '85%',
+        aspectRatio: 16 / 9,
+        height: undefined,
+        marginBottom: 10,
+        borderRadius: 10,
     },
 });
 
