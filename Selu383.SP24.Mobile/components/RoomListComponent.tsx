@@ -41,7 +41,7 @@ const RoomListComponent: React.FC = () => {
         );
     }
 
-    const imageSource = require('../assets/placeholder5.jpg');
+    const imageSource = require('../assets/placeholder6.jpg');
 
     return (
         <ScrollView 

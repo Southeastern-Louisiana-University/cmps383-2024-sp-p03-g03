@@ -2,17 +2,24 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator, StatusBar } from 'react-native';
 import axios from 'axios';
 import HotelDto from '../features/hotels/HotelDto';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+interface RouteParams {
+    searchTerm: string
+}
 
 const HotelsComponent: React.FC = () => {
     const [hotels, setHotels] = useState<HotelDto[]>([]);
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation<any>();
+    const route = useRoute();
 
     useEffect(() => {
+        const { searchTerm } = route.params as RouteParams || { searchTerm: '' };
+
         const fetchHotels = async () => {
             try {
-                const response = await axios.get<HotelDto[]>('https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels');
+                const response = await axios.post<HotelDto[]>('https://selu383-sp24-p03-g03.azurewebsites.net/api/hotels/find', { searchTerm });
                 setHotels(response.data);
                 setLoading(false);
             } catch (error) {
@@ -22,7 +29,7 @@ const HotelsComponent: React.FC = () => {
         };
 
         fetchHotels();
-    }, []);
+    }, [route.params]);
 
     const handleHotelPress = (hotelId: number, hotelName: string) => {
         console.log('Hotel ID:', hotelId, 'Hotel Name:', hotelName);
@@ -41,7 +48,7 @@ const HotelsComponent: React.FC = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="black" />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.heading}>Hotels</Text>
+                <Text style={styles.heading}>Hotels Nearby</Text>
                 {hotels.map((hotel, index) => (
                     <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id, hotel.name)}>
                         <View style={styles.hotelContainer}>
