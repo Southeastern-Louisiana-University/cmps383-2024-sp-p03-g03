@@ -9,7 +9,6 @@ import { Box, Modal, Button, IconButton, AppBar, Toolbar, Typography, Snackbar, 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import HotelDto from "../features/hotel-dtos/HotelDto";
-import { Link } from "react-router-dom";
 
 export default function MainLayout() {
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
