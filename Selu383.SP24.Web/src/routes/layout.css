@@ -27,7 +27,7 @@
   cursor: pointer;
   width: 100vw;
   margin-bottom: 20px;
-  min-height: 0;
+  min-height: auto;
   flex-grow: 1;
 }
 

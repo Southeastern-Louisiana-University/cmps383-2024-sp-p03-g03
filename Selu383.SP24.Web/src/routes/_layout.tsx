@@ -66,6 +66,12 @@ export default function MainLayout() {
     return <div>Error: {error.message}</div>;
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchTerm) {
+      window.location.href = `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now`;
+    }
+  };
+
   return (
     <div>
       <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
@@ -166,11 +172,16 @@ export default function MainLayout() {
               flexDirection: "column",
               alignItems: "center",
             }}>
-            <div style={{ width: "100%", display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+              }}>
               <label htmlFor="search" className="search-bar-text" style={{ marginRight: "10px" }}>
                 Where?
               </label>
-              <input id="search" className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} style={{ marginRight: "10px" }} />
+              <input id="search" className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} onKeyPress={handleKeyPress} style={{ marginRight: "10px" }} />
               <IconButton
                 size="small"
                 sx={{
@@ -183,7 +194,11 @@ export default function MainLayout() {
                 }}
                 component={RouterLink}
                 to={searchTerm ? `/find-hotel?searchTerm=${encodeURIComponent(searchTerm)}&start=now` : "#"}
-                onClick={(e) => (!searchTerm ? e.preventDefault() : null)}
+                onClick={(e) => {
+                  if (!searchTerm) {
+                    e.preventDefault();
+                  }
+                }}
                 aria-disabled={!searchTerm}>
                 <SearchIcon />
               </IconButton>
