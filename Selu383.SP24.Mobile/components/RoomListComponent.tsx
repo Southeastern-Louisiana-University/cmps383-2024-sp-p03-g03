@@ -60,7 +60,6 @@ const RoomListComponent: React.FC = () => {
                         />
                         <Text style={styles.roomName}>{room.hotelName}</Text>
                         <Text style={styles.roomInfo}>Room Type - {room.beds}</Text>
-                        <Text style={styles.roomInfo}>Room Number - {room.id}</Text>
                     </View> 
                 </View>
     
