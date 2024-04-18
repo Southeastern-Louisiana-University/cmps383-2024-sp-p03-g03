@@ -42,7 +42,13 @@ export default function Login() {
     <>
       <AppBar sx={{ bgcolor: "#10b986" }} position="fixed">
         <Toolbar sx={{ padding: 0.8 }}>
-          <Typography onClick={() => navigate("/")} align="left" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}>
+          <Typography
+            onClick={() => navigate("/")}
+            align="left"
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, fontSize: 30, cursor: "pointer" }}
+          >
             Login
           </Typography>
           <Button
@@ -53,7 +59,8 @@ export default function Login() {
               "&:hover": {
                 bgcolor: "#0a936e",
               },
-            }}>
+            }}
+          >
             Home
           </Button>
         </Toolbar>
@@ -65,13 +72,31 @@ export default function Login() {
               Username:
             </label>
             <br />
-            <input className="search-bar" id="email" value={userName} onChange={(e) => setUserName(e.target.value)} type="text" autoComplete="email" placeholder="Username" required />
+            <input
+              className="search-bar"
+              id="email"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              type="text"
+              autoComplete="email"
+              placeholder="Username"
+              required
+            />
             <br />
             <label className="location-label" htmlFor="password">
               Password:
             </label>
             <br />
-            <input className="search-bar" id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" autoComplete="password" required />
+            <input
+              className="search-bar"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Password"
+              autoComplete="password"
+              required
+            />
             <br />
             <br />
             {loading ? "Logging in..." : null}
@@ -85,7 +110,8 @@ export default function Login() {
                 },
               }}
               variant="contained"
-              disabled={loading}>
+              disabled={loading}
+            >
               Login
             </Button>
           </form>
