@@ -9,7 +9,13 @@ export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const authContext = useContext(AuthContext);
+
+  const handleLogin = () => {
+    // Simulating an error
+    setErrorMessage("Incorrect username or password.");
+  };
 
   const { loading, post } = useFetch("api/authentication/login", {
     method: "post",
@@ -21,6 +27,8 @@ export default function Login() {
         console.log(x);
         authContext?.setUser(x);
         navigate("/");
+      } else {
+        handleLogin();
       }
     },
   });
@@ -99,9 +107,12 @@ export default function Login() {
             />
             <br />
             <br />
-            {loading ? "Logging in..." : null}
+            {loading ? (
+              <div style={{ textAlign: "center" }}>Please wait...</div>
+            ) : null}
             {error ? error : null}
             <Button
+              onClick={handleLogin}
               type="submit"
               sx={{
                 bgcolor: "#10b986",
@@ -114,6 +125,9 @@ export default function Login() {
             >
               Login
             </Button>
+            <div>
+              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+            </div>
           </form>
         </div>
       </div>
