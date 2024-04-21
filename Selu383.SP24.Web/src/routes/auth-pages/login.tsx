@@ -59,7 +59,7 @@ export default function Login() {
         </Toolbar>
       </AppBar>
       <div className="body">
-        <div className="body-content-login">
+        <div className="body-content">
           <form onSubmit={handleSubmit}>
             <label className="location-label" htmlFor="email">
               Username:

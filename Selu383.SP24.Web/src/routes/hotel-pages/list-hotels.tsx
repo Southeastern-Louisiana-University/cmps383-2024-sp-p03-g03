@@ -47,7 +47,7 @@ const ListHotels = () => {
         {hotels &&
           hotels.map((hotel: HotelDto) => (
             <Card className="hotel-card" sx={{ maxWidth: 400 }}>
-              <CardActionArea key={hotel.id}>
+              <CardActionArea key={hotel.id} onClick={() => navigate("/")}>
                 <CardMedia>
                   <img src="src\assets\istockphoto-1084106348-612x612.jpg" className="card-image" />
                 </CardMedia>
