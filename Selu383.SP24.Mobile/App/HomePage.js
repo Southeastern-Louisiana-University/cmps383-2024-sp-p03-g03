@@ -33,6 +33,7 @@ export default function HomePage({ navigation }) {
     }
     hideDatePicker();
   };
+  
 
   const handleSearch = () => {
     /*if (!checkInDate || !checkOutDate) {
@@ -42,7 +43,7 @@ export default function HomePage({ navigation }) {
       }, 3000); 
       return;
     } */
-    navigation.navigate('HotelsSearch', { searchTerm });
+    navigation.navigate('HotelsSearch', { searchTerm, checkInDate: new Date(checkInDate), checkOutDate: new Date(checkOutDate) });
   };
 
   return (
@@ -81,7 +82,7 @@ export default function HomePage({ navigation }) {
           <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
           <Text style={styles.welcomeText}>Welcome to EnStay!</Text>
           <Text style={styles.subtitle}>Book your stay with ease.</Text>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reservation')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Hotels')}>
             <Text style={styles.buttonText}>Book Now</Text>
           </TouchableOpacity>
           <Text style={styles.subtitle}>Need to check in?</Text>

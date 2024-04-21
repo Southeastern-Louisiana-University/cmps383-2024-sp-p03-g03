@@ -5,7 +5,10 @@ import HotelDto from '../features/hotels/HotelDto';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface RouteParams {
-    searchTerm: string
+    searchTerm: string, 
+    checkInDate: Date, 
+    checkOutDate: Date,
+    cityName: string
 }
 
 const HotelsComponent: React.FC = () => {
@@ -31,9 +34,9 @@ const HotelsComponent: React.FC = () => {
         fetchHotels();
     }, [route.params]);
 
-    const handleHotelPress = (hotelId: number, hotelName: string) => {
-        console.log('Hotel ID:', hotelId, 'Hotel Name:', hotelName);
-        navigation.navigate('RoomList', { hotelId, hotelName });
+    const handleHotelPress = (hotelId: number, hotelName: string, cityName: string) => {
+        console.log('Hotel ID:', hotelId, 'Hotel Name:', hotelName, 'City:', cityName);
+        navigation.navigate('RoomList', { hotelId, hotelName, checkInDate, checkOutDate, cityName });
     };
 
     if (loading) {
@@ -44,13 +47,19 @@ const HotelsComponent: React.FC = () => {
         );
     }
 
+    const { checkInDate, checkOutDate } = route.params as RouteParams;
+    //console.log('Check in:', checkInDate, 'Check out:' ,checkOutDate);
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="black" />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.heading}>Hotels Nearby</Text>
+                <View style={styles.headerContainer}>
+                    <Text style={styles.subtitle}>Hotels nearby</Text>
+                    <Text style={styles.dateText}>{checkInDate ? checkInDate.toDateString() : 'Check In'} - {checkOutDate ? checkOutDate.toDateString() : 'Check Out'}</Text>
+                </View>
                 {hotels.map((hotel, index) => (
-                    <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id, hotel.name)}>
+                    <TouchableOpacity key={index} onPress={() => handleHotelPress(hotel.id, hotel.name, hotel.cityName)}>
                         <View style={styles.hotelContainer}>
                             <Image
                                 style={styles.hotelImage}
@@ -77,10 +86,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    heading: {
-        fontSize: 32,
-        fontWeight: 'bold',
+    headerContainer: {
+        paddingHorizontal: 20,
         marginBottom: 10,
+    },
+    subtitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 5,
+    },
+    dateText: {
+        fontSize: 16,
         textAlign: 'center',
     },
     hotelContainer: {
