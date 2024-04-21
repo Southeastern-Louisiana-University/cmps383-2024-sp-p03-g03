@@ -50,7 +50,6 @@ body {
 
 .search-card {
   width: 80%;
-  position: absolute;
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
@@ -61,4 +60,27 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+}
+.room-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 100px;
+  padding-right: 20px;
+  background-color: #d9d9d9d9;
+  height: 100vh;
+}
+
+.room-card {
+  cursor: pointer;
+  height: 28vh;
+  max-width: 400px;
+  min-height: 220px;
+  width: 70%;
+  margin-bottom: 20px;
+  display: flex;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

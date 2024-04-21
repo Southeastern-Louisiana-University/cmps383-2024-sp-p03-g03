@@ -197,7 +197,12 @@ export default function MainLayout() {
                 <Card key={hotel.id} className="hotel-card">
                   {" "}
                   {/* Added key prop */}
-                  <CardActionArea sx={{ height: "100%" }}>
+                  <CardActionArea
+                    sx={{ height: "100%" }}
+                    onClick={() => {
+                      console.log("Clicked hotel card. Hotel ID:", hotel.id);
+                      navigate("/rooms", { state: { hotelId: hotel.id } });
+                    }}>
                     <CardMedia component="img" height="150" image="https://t3.ftcdn.net/jpg/00/29/13/38/360_F_29133877_bfA2n7cWV53fto2BomyZ6pyRujJTBwjd.jpg" alt="Hotel Image" sx={{ margin: "auto", display: "block" }} />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
