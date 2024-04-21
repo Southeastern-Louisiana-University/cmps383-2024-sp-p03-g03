@@ -67,6 +67,11 @@ const RoomListComponent: React.FC = () => {
     );
   }
 
+  // Filter unique rooms based on some property, for example, room type
+  const uniqueRooms = Array.from(new Set(rooms?.map((room) => room.beds))).map((type) => {
+    return rooms?.find((room) => room.beds === type);
+  });
+
   return (
     <div>
       <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
@@ -140,20 +145,19 @@ const RoomListComponent: React.FC = () => {
       </Modal>
 
       <div className="room-list">
-        {rooms &&
-          rooms.map((room) => (
-            <Card className="room-card">
-              {" "}
-              <CardActionArea sx={{ height: "100%" }} onClick={() => {}}>
-                <CardMedia component="img" height="150" image="https://t3.ftcdn.net/jpg/00/29/13/38/360_F_29133877_bfA2n7cWV53fto2BomyZ6pyRujJTBwjd.jpg" alt="Hotel Image" sx={{ margin: "auto", display: "block" }} />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {room.beds}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))}
+        {uniqueRooms.map((room) => (
+          <Card className="room-card">
+            {" "}
+            <CardActionArea sx={{ height: "100%" }} onClick={() => {}}>
+              <CardMedia component="img" height="150" image="https://t3.ftcdn.net/jpg/02/71/08/28/360_F_271082810_CtbTjpnOU3vx43ngAKqpCPUBx25udBrg.jpg" alt="Hotel Image" sx={{ margin: "auto", display: "block" }} />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {room?.beds}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
       </div>
     </div>
   );
