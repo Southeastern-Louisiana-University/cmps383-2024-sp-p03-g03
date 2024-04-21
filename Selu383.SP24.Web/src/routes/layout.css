@@ -1,13 +1,10 @@
-.body-content {
-  display: flex;
-  justify-content: center;
-  padding-top: 80px;
-  padding-right: 20px;
+body {
+  margin: 0;
+  padding: 0;
   background-color: #d9d9d9d9;
-  height: 100vh;
 }
 
-.body-content-login {
+.body-content {
   display: flex;
   justify-content: center;
   padding-top: 180px;
@@ -20,34 +17,48 @@
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
-  padding-top: 100px;
+  padding-bottom: 0%;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
 }
 
 .hotel-card {
   cursor: pointer;
-  width: 100vw;
+  height: 28vh;
+  size-adjust: inherit;
+  max-width: 400;
+  width: 70%;
   margin-bottom: 20px;
-  min-height: auto;
-  flex-grow: 1;
+  display: flex;
 }
 
 .card-image {
   width: 100%;
   height: 150px;
-  object-fit: cover;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #d9d9d9d9;
-  height: 100vh;
 }
 
 .search {
   width: 100%;
+  margin-right: 10px;
 }
 
 .search-bar-text {
   color: black;
+  margin-right: 10px;
+}
+
+.search-card {
+  width: 80%;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px;
+  background-color: #0000;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

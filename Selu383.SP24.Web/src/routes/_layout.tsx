@@ -31,6 +31,7 @@ export default function MainLayout() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { get: fetchUser } = useFetch<UserDto>("api/authentication/me", { data: undefined });
@@ -129,7 +130,7 @@ export default function MainLayout() {
               Login
             </Button>
           )}
-          {/*
+
           <Button
             variant="contained"
             sx={{
@@ -141,7 +142,6 @@ export default function MainLayout() {
             onClick={() => navigate("/signup")}>
             Sign up
           </Button>
-          */}
         </Box>
       </Modal>
       <Snackbar open={showLoginSnackbar} autoHideDuration={2800} onClose={() => setShowLoginSnackbar(false)}>
@@ -157,31 +157,17 @@ export default function MainLayout() {
 
       <div className="body">
         <div className="body-content">
-          <Card
-            sx={{
-              width: "80%",
-              position: "absolute",
-              top: "80px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              padding: "15px",
-              backgroundColor: "#00000",
-              borderRadius: "25px",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}>
+          <Card className="search-card">
             <div
               style={{
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
               }}>
-              <label htmlFor="search" className="search-bar-text" style={{ marginRight: "10px" }}>
+              <label htmlFor="search" className="search-bar-text">
                 Where?
               </label>
-              <input id="search" className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} onKeyPress={handleKeyPress} style={{ marginRight: "10px" }} />
+              <input id="search" className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value ?? "")} onKeyPress={handleKeyPress} />
               <IconButton
                 size="small"
                 sx={{
@@ -205,14 +191,14 @@ export default function MainLayout() {
             </div>
           </Card>
 
-          <div className="hotel-list" style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+          <div className="hotel-list">
             {hotels &&
               hotels.map((hotel: HotelDto) => (
-                <Card className="hotel-card" sx={{ maxWidth: 400 }}>
-                  <CardActionArea key={hotel.id} className="card-action-area">
-                    <CardMedia>
-                      <img src="https://t3.ftcdn.net/jpg/00/29/13/38/360_F_29133877_bfA2n7cWV53fto2BomyZ6pyRujJTBwjd.jpg" className="card-image" />
-                    </CardMedia>
+                <Card key={hotel.id} className="hotel-card">
+                  {" "}
+                  {/* Added key prop */}
+                  <CardActionArea sx={{ height: "100%" }}>
+                    <CardMedia component="img" height="150" image="https://t3.ftcdn.net/jpg/00/29/13/38/360_F_29133877_bfA2n7cWV53fto2BomyZ6pyRujJTBwjd.jpg" alt="Hotel Image" sx={{ margin: "auto", display: "block" }} />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
                         {hotel.name}

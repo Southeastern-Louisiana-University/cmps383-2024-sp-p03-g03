@@ -56,7 +56,7 @@ export default function FindHotel() {
         </Toolbar>
       </AppBar>
 
-      <div className="hotel-list" style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+      <div className="hotel-list" style={{ marginTop: "120px", display: "flex", gap: "20px", justifyContent: "center" }}>
         {hotels &&
           hotels.map((hotel: HotelDto) => (
             <Card className="hotel-card" sx={{ maxWidth: 400 }}>

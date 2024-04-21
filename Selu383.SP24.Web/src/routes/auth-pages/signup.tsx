@@ -8,11 +8,12 @@ export default function Signup() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [role] = useState("");
   const [error, setError] = useState("");
   const authContext = useContext(AuthContext);
 
   const { loading, post } = useFetch("api/users", {
-    method: "post",
+    method: "POST",
     onNewData: (_, x) => {
       if (typeof x === "string") {
         setError(x);
@@ -35,6 +36,7 @@ export default function Signup() {
     post({
       userName: userName,
       password: password,
+      role: role,
     });
   }
 
