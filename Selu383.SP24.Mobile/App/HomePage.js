@@ -36,13 +36,13 @@ export default function HomePage({ navigation }) {
   
 
   const handleSearch = () => {
-    /*if (!checkInDate || !checkOutDate) {
-      setErrorMessage('Please select both check-in and check-out dates.');
+    if (!checkInDate || !checkOutDate) {
+      setErrorMessage('Please select both a check-in and check-out date.');
       setTimeout(() => {
         setErrorMessage('');
-      }, 3000); 
+      }, 2500); 
       return;
-    } */
+    } 
     navigation.navigate('HotelsSearch', { searchTerm, checkInDate: new Date(checkInDate), checkOutDate: new Date(checkOutDate) });
   };
 
@@ -82,9 +82,25 @@ export default function HomePage({ navigation }) {
           <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
           <Text style={styles.welcomeText}>Welcome to EnStay!</Text>
           <Text style={styles.subtitle}>Book your stay with ease.</Text>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Hotels')}>
-            <Text style={styles.buttonText}>Book Now</Text>
-          </TouchableOpacity>
+          <TouchableOpacity 
+  style={styles.button} 
+  onPress={() => {
+    if (!checkInDate || !checkOutDate) {
+      setErrorMessage('Please select both a check-in and check-out date.');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 2500); 
+    } else {
+      navigation.navigate('HotelsSearch', { 
+        searchTerm, 
+        checkInDate: new Date(checkInDate), 
+        checkOutDate: new Date(checkOutDate) 
+      });
+    }
+  }}
+>
+  <Text style={styles.buttonText}>Book Now</Text>
+</TouchableOpacity>
           <Text style={styles.subtitle}>Need to check in?</Text>
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.buttonText}>Check In</Text>
