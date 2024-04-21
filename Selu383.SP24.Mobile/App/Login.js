@@ -116,7 +116,7 @@ const SignInScreen = () => {
       {error && <Text style={styles.errorText}>{error}</Text>}
       {userData && (
         <View>
-          <Text style={styles.loginText}>Hello {userData.userName} !</Text>
+          <Text style={styles.loginText}>Hello {userData.userName}!</Text>
         </View>
       )}
     </View>
