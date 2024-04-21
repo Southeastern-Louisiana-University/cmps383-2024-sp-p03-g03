@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import RoomDto from '../features/hotels/RoomDto';
 
 interface RouteParams {
     hotelId: number;
-    hotelName: string
+    hotelName: string;
+    checkInDate: Date, 
+    checkOutDate: Date,
+    cityName: string
 }
 
 const RoomListComponent: React.FC = () => {
     const [rooms, setRooms] = useState<RoomDto[]>([]);
     const [loading, setLoading] = useState(true);
     const route = useRoute();
-    const { hotelId , hotelName} = route.params as RouteParams;
+    const navigation = useNavigation<any>();
+    const { hotelId , hotelName, checkInDate, checkOutDate, cityName} = route.params as RouteParams;
+
+    //console.log('City name -', cityName);
 
     useEffect(() => {
         const fetchRooms = async () => {
             try {
                 const response = await axios.get<RoomDto[]>(`https://selu383-sp24-p03-g03.azurewebsites.net/api/rooms/byhotel/${hotelId}`);
-                console.log('Hotel ID Recieved:', hotelId);
                 setRooms(response.data);
                 setLoading(false);
             } catch (error) {
@@ -31,7 +36,29 @@ const RoomListComponent: React.FC = () => {
         fetchRooms();
     }, [hotelId]);
 
-    
+    const getUniqueRoomTypes = () => {
+        const uniqueRoomTypes: string[] = [];
+        rooms.forEach(room => {
+            if (!uniqueRoomTypes.includes(room.beds)) {
+                uniqueRoomTypes.push(room.beds);
+            }
+        });
+        return uniqueRoomTypes;
+    };
+
+    const uniqueRoomTypes = getUniqueRoomTypes();
+
+    const handleRoomPress = (room: RoomDto) => {
+        console.log("Room details: room list", room);
+        navigation.navigate('Reservation', {
+            hotelName: hotelName,
+            cityName: cityName,
+            roomType: room.beds,
+            checkInDate: checkInDate,
+            checkOutDate: checkOutDate,
+        });
+        
+    };
 
     if (loading) {
         return (
@@ -45,25 +72,31 @@ const RoomListComponent: React.FC = () => {
 
     return (
         <ScrollView 
-        style={styles.container} 
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
+            style={styles.container} 
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
         >
             <Text style={styles.heading}>Rooms for {hotelName}</Text>
-            {rooms.map((room) => (
-                <View key={room.id}>
-               
-                    <View style={styles.roomContainer}>
-                        <Image
-                            source={imageSource}
-                            style={styles.roomImage}
-                        />
-                        <Text style={styles.roomName}>{room.hotelName}</Text>
-                        <Text style={styles.roomInfo}>Room Type - {room.beds}</Text>
-                    </View> 
-                </View>
-    
-            ))}
+            <Text style={styles.dateText}>{checkInDate ? checkInDate.toDateString() : 'Check In'} - {checkOutDate ? checkOutDate.toDateString() : 'Check Out'}</Text>
+            {uniqueRoomTypes.map(roomType => {
+                const room = rooms.find(room => room.beds === roomType);
+                if (room) {
+                    return (
+                        <TouchableOpacity key={room.id} onPress={() => handleRoomPress(room)}>
+                            <View style={styles.roomContainer}>
+                                <Image
+                                    source={imageSource}
+                                    style={styles.roomImage}
+                                />
+                                <Text style={styles.roomName}>{room.hotelName}</Text>
+                                <Text style={styles.roomInfo}>Room Type - {room.beds}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    );
+                } else {
+                    return null;
+                }
+            })}
         </ScrollView>
     );
 };
@@ -115,16 +148,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
-    button: {
-        backgroundColor: '#10b981',
-        padding: 10,
-        borderRadius: 5,
-        alignSelf: 'center',
-        marginTop: 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
+    dateText: {
+        fontSize: 16,
         textAlign: 'center',
     },
 });

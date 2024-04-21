@@ -49,6 +49,7 @@ const RoomsComponent: React.FC = () => {
                                 <Text style={styles.roomName}>Hotel - {room.hotelName}</Text>
                                 <Text style={styles.roomInfo}>Room status: {room.isAvailable ? 'Available' : 'Not Available'}</Text>
                                 <Text style={styles.roomInfo}>Room type: {room.beds}</Text>
+                                <Text style={styles.roomInfo}>Room Number: {room.id}</Text>
                             </View>
                         </TouchableOpacity>
                     ))}

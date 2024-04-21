@@ -4,7 +4,7 @@
     "slug": "Selu383-SP24-Mobile-p03-g03",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Hotels_Icon.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

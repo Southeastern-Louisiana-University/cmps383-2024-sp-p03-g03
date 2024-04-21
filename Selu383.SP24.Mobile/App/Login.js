@@ -1,21 +1,18 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
-import { useEffect } from 'react';
 
 const SignInScreen = () => {
-
   const isFocused = useIsFocused();
-
-    useEffect(() => {
-        if (isFocused) {
-            console.log('Reloading login page');
-        }
-    }, [isFocused]);
-
   const navigation = useNavigation();
+
+  useEffect(() => {
+    if (isFocused) {
+      console.log('Reloading login page');
+    }
+  }, [isFocused]);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -38,8 +35,6 @@ const SignInScreen = () => {
         setUserData(userDataResponse.data);
         setUsername('');
         setPassword('');
-
-        //navigation.navigate('UserReservation');
       } else {
         console.error('Login failed');
         setError('Login failed');
@@ -51,7 +46,6 @@ const SignInScreen = () => {
       setLoading(false);
     }
   };
-
 
   const handleLogout = async () => {
     try {
@@ -83,14 +77,13 @@ const SignInScreen = () => {
       } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
           console.log('User is not logged in');
-          setUserData(null); 
-          //navigation.navigate('Login');
+          setUserData(null);
         } else {
           console.error('Error checking if user is logged in:', error);
         }
       }
     };
-  
+
     checkLoggedIn();
   }, []);
 
@@ -110,20 +103,22 @@ const SignInScreen = () => {
         value={password}
         onChangeText={text => setPassword(text)}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignIn} disabled={loading}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </TouchableOpacity>
+      {userData ? (
+        <TouchableOpacity style={styles.button} onPress={handleLogout} disabled={loading}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.button} onPress={handleSignIn} disabled={loading}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+      )}
       {loading && <ActivityIndicator size="large" color="#10b981" />}
       {error && <Text style={styles.errorText}>{error}</Text>}
       {userData && (
-        <View> 
-          <Text style={styles.loginText}>Hello {userData.userName} !</Text>
+        <View>
+          <Text style={styles.loginText}>Hello {userData.userName}!</Text>
         </View>
       )}
-      <View style={styles.buttonSpace}></View>
-      <TouchableOpacity style={styles.button} onPress={handleLogout} disabled={loading}>
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -165,9 +160,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 35,
     fontWeight: 'bold',
-  },
-  buttonSpace: {
-    height: 30,
   },
 });
 

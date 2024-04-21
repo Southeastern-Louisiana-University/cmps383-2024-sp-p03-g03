@@ -3,29 +3,30 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar, TextInput, 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import axios from 'axios';
 
-export default function ReservationPage({ navigation }) {
-  const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState('');
-  const [city, setCity] = useState('');
-  const [hotel, setHotel] = useState('');
-  const [roomType, setRoomType] = useState('');
+export default function ReservationPage({ navigation, route }) {
+  const { checkInDate, checkOutDate, cityName, hotelName, roomType } = route.params;
+
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedDateType, setSelectedDateType] = useState('');
+
+  const [checkInDateState, setCheckInDate] = useState(checkInDate ? checkInDate.toDateString() : '');
+  const [checkOutDateState, setCheckOutDate] = useState(checkOutDate ? checkOutDate.toDateString() : '');
+  const [city, setCity] = useState(cityName ? cityName : '');
+  const [hotel, setHotel] = useState(hotelName ? hotelName : '');
+  const [roomTypeState, setRoomType] = useState(roomType ? roomType : '');
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      setCheckInDate('');
-      setCheckOutDate('');
-      setCity('');
-      setHotel('');
-      setRoomType('');
+      setCheckInDate(checkInDate ? checkInDate.toDateString() : '');
+      setCheckOutDate(checkOutDate ? checkOutDate.toDateString() : '');
+      setCity(cityName ? cityName : '');
+      setHotel(hotelName ? hotelName : '');
+      setRoomType(roomType ? roomType : '');
     });
 
     return unsubscribe;
   }, [navigation]);
 
   const showDatePicker = (dateType) => {
-    setSelectedDateType(dateType);
     setDatePickerVisibility(true);
   };
 
@@ -63,10 +64,17 @@ export default function ReservationPage({ navigation }) {
       });
   
       console.log('Reservation submitted:', response.data);
-      Alert.alert('Reservation Submitted', 'Your reservation has been successfully submitted.', [
-        { text: 'OK', onPress: () => navigation.navigate('ReservationPage') }
-      ]);
-    } catch (error) {
+    Alert.alert('Reservation Submitted', 'Your reservation has been successfully submitted.', [
+      { text: 'OK', onPress: () => {
+        setCheckInDate('');
+        setCheckOutDate('');
+        setCity('');
+        setHotel('');
+        setRoomType('');
+        navigation.navigate('Home');
+      }}
+    ]);
+  } catch (error) {
       console.error('Error submitting reservation:', error);
       Alert.alert('Error', 'Failed to submit reservation. Please try again later.');
     }
@@ -77,50 +85,25 @@ export default function ReservationPage({ navigation }) {
       <StatusBar backgroundColor="black" barStyle="dark-content"/>
       <View style={styles.content}>
         <Image source={require('../assets/placeholder1.jpg')} style={styles.hotelImage} />
-        <Text style={styles.welcomeText}>Ready to book?</Text>
-        <Text style={styles.subtitle}>Please fill out the information below.</Text>
-        <TouchableOpacity style={styles.dateContainer} onPress={() => showDatePicker('checkIn')}>
-          <TextInput
-            style={styles.input}
-            placeholder="Check-in Date"
-            value={checkInDate}
-            editable={false}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.dateContainer} onPress={() => showDatePicker('checkOut')}>
-          <TextInput
-            style={styles.input}
-            placeholder="Check-out Date"
-            value={checkOutDate}
-            editable={false}
-          />
-        </TouchableOpacity>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-        />
-        <TextInput
-          style={[styles.input, styles.hotelInput]}
-          placeholder="Room Type"
-          value={roomType}
-          onChangeText={setRoomType}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="City"
-          value={city}
-          onChangeText={setCity}
-        />
-        <TextInput
-          style={[styles.input, styles.hotelInput]}
-          placeholder="Hotel"
-          value={hotel}
-          onChangeText={setHotel}
-        />
+        <Text style={styles.welcomeText}>Does everything look correct?</Text>
+        <Text style={styles.subtitle}>
+          You want to book a <Text style={styles.boldText}>{roomType}</Text> at{' '}
+        </Text>
+        <Text style={styles.subtitle}>
+        <Text style={styles.boldText}>{hotelName}</Text> 
+        </Text>
+        <Text style={styles.subtitle}>
+          in{' '}
+        <Text style={styles.boldText}>{cityName}</Text> for the following dates:
+        </Text>
+        <Text style={styles.subtitle}>Check-in: {' '}
+        <Text style={styles.boldText}>{checkInDate.toDateString()}</Text>
+        </Text>
+        <Text style={styles.subtitle}>Check-out: {' '}
+        <Text style={styles.boldText}>{checkOutDate.toDateString()}</Text>
+        </Text>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={styles.buttonText}>Confirm Booking</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -185,5 +168,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  boldText: {
+    fontWeight: 'bold',
+    fontSize:24,
+    textDecorationLine: 'underline',
+    
   },
 });
