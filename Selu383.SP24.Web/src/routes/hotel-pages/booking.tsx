@@ -94,7 +94,7 @@ export default function BookingForm() {
     <Box sx={{ paddingTop: "200px" }}>
       <AppBar position="fixed" sx={{ bgcolor: "#10b986" }}>
         <Toolbar>
-          <Typography align="left" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 36, cursor: "pointer" }}>
+          <Typography onClick={() => navigate("/")} align="left" variant="h6" component="div" sx={{ flexGrow: 1, fontSize: 36, cursor: "pointer" }}>
             EnStay
           </Typography>
           <Tooltip title="Profile">
