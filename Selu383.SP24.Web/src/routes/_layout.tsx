@@ -73,6 +73,10 @@ export default function MainLayout() {
     }
   };
 
+  const handleHotelClick = (hotelId: number) => {
+    navigate("/rooms", { state: { hotelId } });
+  };
+
   return (
     <div>
       <AuthContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}></AuthContext.Provider>
@@ -195,14 +199,7 @@ export default function MainLayout() {
             {hotels &&
               hotels.map((hotel: HotelDto) => (
                 <Card key={hotel.id} className="hotel-card">
-                  {" "}
-                  {/* Added key prop */}
-                  <CardActionArea
-                    sx={{ height: "100%" }}
-                    onClick={() => {
-                      console.log("Clicked hotel card. Hotel ID:", hotel.id);
-                      navigate("/rooms", { state: { hotelId: hotel.id } });
-                    }}>
+                  <CardActionArea sx={{ height: "100%" }} onClick={() => handleHotelClick(hotel.id)}>
                     <CardMedia component="img" height="150" image="https://t3.ftcdn.net/jpg/00/29/13/38/360_F_29133877_bfA2n7cWV53fto2BomyZ6pyRujJTBwjd.jpg" alt="Hotel Image" sx={{ margin: "auto", display: "block" }} />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">

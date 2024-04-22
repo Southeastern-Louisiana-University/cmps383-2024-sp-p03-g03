@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RoomDto from "../../features/hotel-dtos/RoomDto";
 import useFetch from "use-http";
 import { Box, Typography, CircularProgress, Card, CardActionArea, CardContent, CardMedia, AppBar, Button, IconButton, Modal, Toolbar, Tooltip } from "@mui/material";
@@ -6,9 +6,14 @@ import AuthContext from "../../features/authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
 import UserDto from "../../features/authentication/UserDto";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useLocation } from "react-router-dom";
 
-const RoomListComponent: React.FC = () => {
-  const { data: rooms, loading, error, get } = useFetch<RoomDto[]>(`/api/rooms/byhotel/1`);
+export default function RoomListComponent() {
+  const location = useLocation();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const hotelId = location.state?.hotelId || 0;
+
+  const { data: rooms, loading, error, get } = useFetch<RoomDto[]>(`/api/rooms/byhotel/${hotelId}`);
   const [currentUser, setCurrentUser] = useState<null | undefined | UserDto>(undefined);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -71,6 +76,10 @@ const RoomListComponent: React.FC = () => {
   const uniqueRooms = Array.from(new Set(rooms?.map((room) => room.beds))).map((type) => {
     return rooms?.find((room) => room.beds === type);
   });
+
+  const handleRoomClick = (roomId: number | undefined) => {
+    navigate("/booking", { state: { roomId } });
+  };
 
   return (
     <div>
@@ -146,9 +155,8 @@ const RoomListComponent: React.FC = () => {
 
       <div className="room-list">
         {uniqueRooms.map((room) => (
-          <Card className="room-card">
-            {" "}
-            <CardActionArea sx={{ height: "100%" }} onClick={() => {}}>
+          <Card className="room-card" key={room?.id}>
+            <CardActionArea sx={{ height: "100%" }} onClick={() => handleRoomClick(room?.id)}>
               <CardMedia component="img" height="150" image="https://t3.ftcdn.net/jpg/02/71/08/28/360_F_271082810_CtbTjpnOU3vx43ngAKqpCPUBx25udBrg.jpg" alt="Hotel Image" sx={{ margin: "auto", display: "block" }} />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -161,6 +169,4 @@ const RoomListComponent: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default RoomListComponent;
+}
